@@ -1,6 +1,7 @@
 ---
 tags:
   - claude-code
+  - masterclass
   - capitulo-07
   - mcp
   - herramientas
@@ -10,10 +11,10 @@ capitulo: 7
 creado: 2026-07-04
 actualizado: 2026-07-15
 ---
-****
+
 # Capítulo 7 — Extensibilidad: MCP, Subagentes y Skills
 
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Capitulo 06 - Comandos CLI y Superficies]] · Siguiente → [[Capitulo 08 - Comparativas]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Claude Code Capitulo 06 - Comandos CLI y Superficies]] · Siguiente → [[Claude Code Capitulo 08 - Comparativas]]
 
 > [!tip] La pregunta de este capítulo
 > Los Capítulos 2–5 mostraron las herramientas con las que Claude Code viene de fábrica (leer, editar, ejecutar, buscar). Este capítulo responde la pregunta natural siguiente: **¿cómo se le dan manos que Anthropic nunca le fabricó?** — tu Jira, tu base de datos, tu Teams, la documentación de Microsoft. Y su pregunta gemela: ¿cuándo conviene *extender* a Claude (MCP) y cuándo conviene que *delegue* (subagentes)?
@@ -291,4 +292,4 @@ Piensa en un taller mecánico. Las herramientas nativas de Claude son las de **s
 > 9. Corre con `claude-sonnet-5` — el `model` del frontmatter es una asignación fija del agente, no algo que herede del orquestador (confirmado en el log: el orquestador cambió de modelo a mitad de sesión y el subagente no varió). Y no, no necesariamente incumplió: `readCount:0` solo prueba que no llamó a `Read` sobre ese archivo — si el resultado final respetó las reglas del proyecto es porque el **orquestador las pre-digirió dentro del `prompt`** que armó para invocarlo. La lección es justamente que "documentado" y "ejecutado" pueden diferir sin que el resultado sea incorrecto — pero quien orquesta no puede darlo por hecho sin mirar el log.
 
 ---
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Capitulo 08 - Comparativas]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Claude Code Capitulo 08 - Comparativas]]

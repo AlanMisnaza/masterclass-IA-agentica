@@ -3,7 +3,8 @@ tags:
   - antigravity
   - moc
 creado: 2026-07-09
-estado: esqueleto
+actualizado: 2026-07-15
+estado: en-curso
 ---
 
 # 🧭 Antigravity — Mapa de Contenidos
@@ -36,14 +37,12 @@ Guía progresiva para entender **Antigravity** (Google) desde cero hasta nivel a
 | 6 | [[Antigravity Capitulo 06 - Comandos CLI y Superficies\|Comandos, CLI y superficies]] | ✅ |
 | 7 | [[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Extensibilidad: MCP, subagentes y skills]] | ✅ |
 | 8 | [[Antigravity Capitulo 08 - Comparativas\|Portal a Comparativas (Matriz de Decisión · Comparativa por Capítulo)]] | ✅ |
-| 9 | Casos prácticos con sesiones reales (se escribirá junto con el usuario, con casos de sesiones reales acumuladas) | ⏳ |
+| 9 | [[Antigravity Capitulo 09 - Casos Practicos\|Casos prácticos con sesiones reales]] (se escribirá junto con el usuario, con casos de sesiones reales acumuladas) | ⏳ |
 | 10 | [[Antigravity Capitulo 10 - Mejores Practicas\|Mejores prácticas]] | ✅ |
 
-Las notas de capítulo aún no existen — se crearán en `Antigravity/Capitulos/` a medida que se escriban (los enlaces `[[wiki]]` se añadirán a esta tabla en ese momento, para no dejar enlaces rotos mientras tanto).
-
 ## Leyenda
-✅ Completo | ⏳ Pendiente
+✅ Completo | ⏳ Pendiente (nota-marcador, aún sin contenido)
 
 ## Contribuciones ya realizadas en Comparativas
 
-Antes de que esta guía arrancara, una sesión real de Antigravity ya dejó sus primeras contribuciones 🟢 bajo la regla de columnas: su columna en las tablas de [[Comparativa por Capitulo]] y [[Matriz de Decision]], y la nota firmada sobre `define_subagent` / `invoke_subagent` (visible también en el §8.2 del [[Capitulo 08 - Comparativas|Capítulo 8 de Claude Code]]).
+Antes de que esta guía arrancara, una sesión real de Antigravity ya dejó sus primeras contribuciones 🟢 bajo la regla de columnas: su columna en las tablas de [[Comparativa por Capitulo]] y [[Matriz de Decision]], y la nota firmada sobre `define_subagent` / `invoke_subagent` (visible también en el §8.2 del [[Claude Code Capitulo 08 - Comparativas|Capítulo 8 de Claude Code]]).

@@ -10,7 +10,7 @@ origen: "Capítulo 8 de la guía de Claude Code (§8.10–§8.13)"
 
 # 🧭 Matriz de Decisión — ¿cuál herramienta para qué tarea?
 
-[[Masterclass IA Agentica - Mapa de Contenidos|← Mapa de la Masterclass]] · Hermano: [[Comparativa por Capitulo]] · Semilla: [[Capitulo 08 - Comparativas]]
+[[Masterclass IA Agentica - Mapa de Contenidos|← Mapa de la Masterclass]] · Hermano: [[Comparativa por Capitulo]] · Semilla: [[Claude Code Capitulo 08 - Comparativas]]
 
 > [!important] Documento vivo — regla de columnas
 > Esta matriz sintetiza fortalezas, debilidades y criterios de decisión. Cada herramienta edita **solo su propia columna/sección**; aportes fuera de tabla con callout firmado. Los juicios 🟡 comparativos los mantiene la sesión cronista de Claude Code — si una herramienta cree que un juicio es injusto, añade su nota firmada, no lo reescribe. Los marcadores 🟢 son relativos al autor de cada aporte.
@@ -23,8 +23,9 @@ origen: "Capítulo 8 de la guía de Claude Code (§8.10–§8.13)"
 
 - **Control local y transparencia**: ves exactamente qué hace, en tu sistema, con permisos explícitos. Sin cajas negras.
 - **Memoria entre sesiones**: la auto-memory es una ventaja real — el agente aprende tus preferencias y no las olvida.
-- **Ecosistema de persistencia**: CLAUDE.md + rules + settings + memory = continuidad automática al cambiar de superficie ([[Capitulo 03 - Contexto y Memoria|Capítulo 3]]).
+- **Ecosistema de persistencia**: CLAUDE.md + rules + settings + memory = continuidad automática al cambiar de superficie ([[Claude Code Capitulo 03 - Contexto y Memoria|Capítulo 3]]).
 - **CLI como ciudadano de primera clase**: nació ahí, se nota. Composable con pipes, scripteable, integrable.
+- **Subagentes declarativos y auditables**: se definen como archivos `.md` versionables en Git (`.claude/agents/`), con modelo fijo por frontmatter y rastro completo en transcripts JSONL — 🟢 auditados forensemente invocación por invocación ([[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes|Capítulo 7]] §7.6).
 
 ### Claude Code flaquea en...
 

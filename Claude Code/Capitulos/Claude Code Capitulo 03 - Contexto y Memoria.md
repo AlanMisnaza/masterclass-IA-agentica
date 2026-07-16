@@ -1,6 +1,7 @@
 ---
 tags:
   - claude-code
+  - masterclass
   - capitulo-03
   - contexto
   - memoria
@@ -11,7 +12,7 @@ creado: 2026-07-05
 
 # Capítulo 3 — Contexto, Memoria y Conversaciones Largas
 
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Capitulo 02 - Arquitectura Conceptual]] · Siguiente → [[Capitulo 04 - Planificacion y Flujo de Trabajo]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Claude Code Capitulo 02 - Arquitectura Conceptual]] · Siguiente → [[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo]]
 
 > [!tip] Ejemplo central de este capítulo
 > No hace falta inventar un ejemplo: **este mismo proyecto ya usa, en vivo, tres de los cuatro mecanismos de memoria de este capítulo** — el `CLAUDE.md` que escribimos en el Capítulo 1, los archivos de memoria de usuario que se han ido guardando durante esta sesión, y una regla nueva que creamos hace un momento. Todo 🟢 observable, nada hipotético.
@@ -113,7 +114,7 @@ Separar en tipos no es burocracia decorativa: permite, por ejemplo, repasar solo
 
 🔵 Al iniciar sesión se cargan siempre las primeras ~200 líneas (o 25 KB) de `MEMORY.md` — hoy son 3 líneas, así que se carga completo. Los archivos de tema individuales **no se cargan todos de entrada**: se leen bajo demanda, cuando algo en la conversación los hace relevantes.
 
-🟡 Es la misma filosofía que el [[Capitulo 07 - MCP y Herramientas|Capítulo 7]] explicará con las herramientas MCP (`ToolSearch` difiere los esquemas y los carga solo cuando hace falta): no cargar de más "por si acaso", porque el contexto es finito.
+🟡 Es la misma filosofía que el [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes|Capítulo 7]] explicará con las herramientas MCP (`ToolSearch` difiere los esquemas y los carga solo cuando hace falta): no cargar de más "por si acaso", porque el contexto es finito.
 
 ### 3.4.4 Disciplina de guardado: no es "anotar todo lo que pase"
 
@@ -148,7 +149,7 @@ Si esta conversación terminara ahora y se abriera una sesión nueva de Claude C
 
 ## 3.5 La ventana de contexto: memoria de una sola sesión
 
-Todo lo anterior (CLAUDE.md, reglas, memoria de usuario) son formas de **persistir información entre sesiones**. Pero dentro de una sola sesión activa —como esta misma conversación— existe otra capa: la ventana de contexto que ya presentamos en el [[Capitulo 02 - Arquitectura Conceptual#2.3 Cómo usa el contexto|Capítulo 2, §2.3]].
+Todo lo anterior (CLAUDE.md, reglas, memoria de usuario) son formas de **persistir información entre sesiones**. Pero dentro de una sola sesión activa —como esta misma conversación— existe otra capa: la ventana de contexto que ya presentamos en el [[Claude Code Capitulo 02 - Arquitectura Conceptual#2.3 Cómo usa el contexto|Capítulo 2, §2.3]].
 
 ```
 ┌─────────────────────── Ventana de contexto activa ───────────────────────┐
@@ -202,4 +203,4 @@ Piensa en cómo funciona la memoria de un equipo de trabajo real. El **manual de
 > 6. Es un riesgo real porque una sesión futura podría leer ese hecho y actuar sobre él (por ejemplo, creer que hay que reescribir un capítulo que ya está listo). No es solo estética: una memoria vieja se trata como una foto congelada, no como verdad permanente. A escala, `consolidate-memory` (apoyado en `autoDreamEnabled`) fusiona duplicados y corrige hechos desactualizados, además de proteger el presupuesto limitado (~200 líneas) del índice para que memorias nuevas no queden fuera de la carga automática.
 
 ---
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Capitulo 04 - Planificacion y Flujo de Trabajo]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo]]

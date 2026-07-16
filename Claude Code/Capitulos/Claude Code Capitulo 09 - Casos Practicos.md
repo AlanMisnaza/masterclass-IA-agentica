@@ -1,6 +1,7 @@
 ---
 tags:
   - claude-code
+  - masterclass
   - capitulo-09
   - casos-practicos
   - sesiones-reales
@@ -12,7 +13,7 @@ actualizado: 2026-07-09
 
 # Capítulo 9 — Casos Prácticos: sesiones completas
 
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Capitulo 08 - Comparativas]] · Siguiente → [[Capitulo 10 - Mejores Practicas]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Claude Code Capitulo 08 - Comparativas]] · Siguiente → [[Claude Code Capitulo 10 - Mejores Practicas]]
 
 > [!tip] La pregunta de este capítulo
 > Los capítulos anteriores enseñaron los conceptos por separado: contexto, permisos, Git, MCP, subagentes. Pero en el trabajo real **todo ocurre junto**. Este capítulo muestra cómo se combinan, usando **casos reales que ocurrieron durante la construcción de esta misma guía** — no ejemplos hipotéticos, sino sesiones que puedes verificar en los transcripts.
@@ -30,22 +31,22 @@ actualizado: 2026-07-09
 
 | Capítulo | Concepto | Cómo apareció aquí |
 |---|---|---|
-| [[Capitulo 01 - Fundamentos y Filosofia\|Cap 1]] | Filosofía Unix | Cada capítulo es un archivo .md independiente, componible, no un monolito |
-| [[Capitulo 02 - Arquitectura Conceptual\|Cap 2]] | Lectura de código | Claude lee el vault completo para entender la estructura antes de escribir |
-| [[Capitulo 03 - Contexto y Memoria\|Cap 3]] | CLAUDE.md + auto-memory | El método de trabajo vive en CLAUDE.md; las preferencias del usuario se acumulan en auto-memory |
-| [[Capitulo 03 - Contexto y Memoria\|Cap 3]] | Compactación | La sesión se compactó múltiples veces — el resumen preservó el contexto esencial |
-| [[Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] | Permisos | WebSearch/WebFetch auto-aprobados en `settings.json` del proyecto |
-| [[Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] | Plan Mode | Antes de cada capítulo: confirmar estado → alinearse → escribir |
-| [[Capitulo 06 - Comandos CLI y Superficies\|Cap 6]] | Superficies | Toda la guía se escribió desde la app; las sesiones CLI fueron paralelas |
-| [[Capitulo 07 - MCP y Herramientas\|Cap 7]] | MCP + tool search | Herramientas MCP cargadas bajo demanda (registry, Microsoft Learn, session management) |
+| [[Claude Code Capitulo 01 - Fundamentos y Filosofia\|Cap 1]] | Filosofía Unix | Cada capítulo es un archivo .md independiente, componible, no un monolito |
+| [[Claude Code Capitulo 02 - Arquitectura Conceptual\|Cap 2]] | Lectura de código | Claude lee el vault completo para entender la estructura antes de escribir |
+| [[Claude Code Capitulo 03 - Contexto y Memoria\|Cap 3]] | CLAUDE.md + auto-memory | El método de trabajo vive en CLAUDE.md; las preferencias del usuario se acumulan en auto-memory |
+| [[Claude Code Capitulo 03 - Contexto y Memoria\|Cap 3]] | Compactación | La sesión se compactó múltiples veces — el resumen preservó el contexto esencial |
+| [[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] | Permisos | WebSearch/WebFetch auto-aprobados en `settings.json` del proyecto |
+| [[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] | Plan Mode | Antes de cada capítulo: confirmar estado → alinearse → escribir |
+| [[Claude Code Capitulo 06 - Comandos CLI y Superficies\|Cap 6]] | Superficies | Toda la guía se escribió desde la app; las sesiones CLI fueron paralelas |
+| [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] | MCP + tool search | Herramientas MCP cargadas bajo demanda (registry, Microsoft Learn, session management) |
 
 ### Patrón clave: el checkpoint humano
 
 🟢 En el Capítulo 7, después de verificar tres confirmaciones (estado del vault, trabajo pendiente, roles del protocolo), el cronista arrancó a trabajar **sin esperar el visto bueno explícito del usuario**. El usuario interrumpió: *"tenías que confirmarme, A MÍ, antes de arrancar, ¿qué pasó?"*
 
-**Lección aprendida**: "si cuadra, seguimos" lo juzga el usuario, no Claude. Verificar datos y confirmar datos son dos acciones distintas — la primera la puede hacer Claude solo; la segunda requiere que el humano diga "adelante". Este feedback se guardó en auto-memory ([[Capitulo 03 - Contexto y Memoria|Cap 3 §3.4]]) para que no se repita.
+**Lección aprendida**: "si cuadra, seguimos" lo juzga el usuario, no Claude. Verificar datos y confirmar datos son dos acciones distintas — la primera la puede hacer Claude solo; la segunda requiere que el humano diga "adelante". Este feedback se guardó en auto-memory ([[Claude Code Capitulo 03 - Contexto y Memoria|Cap 3 §3.4]]) para que no se repita.
 
-**Concepto subyacente**: el human in the loop del [[Capitulo 04 - Planificacion y Flujo de Trabajo|Capítulo 4]] no es decorativo — es un control real que el agente debe respetar incluso cuando técnicamente puede seguir solo.
+**Concepto subyacente**: el human in the loop del [[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo|Capítulo 4]] no es decorativo — es un control real que el agente debe respetar incluso cuando técnicamente puede seguir solo.
 
 ### Patrón clave: la compactación como aliada
 
@@ -55,7 +56,7 @@ actualizado: 2026-07-09
 - Los feedbacks guardados en memoria
 - Los hallazgos pendientes de documentar
 
-La compactación no fue un problema — fue una **feature**. La sesión pudo continuar el trabajo horas después sin perder el hilo, porque el mecanismo del [[Capitulo 03 - Contexto y Memoria|Capítulo 3 §3.6]] funcionó como se diseñó.
+La compactación no fue un problema — fue una **feature**. La sesión pudo continuar el trabajo horas después sin perder el hilo, porque el mecanismo del [[Claude Code Capitulo 03 - Contexto y Memoria|Capítulo 3 §3.6]] funcionó como se diseñó.
 
 ---
 
@@ -85,11 +86,11 @@ Usuario ←───────────────────────
 
 | Capítulo | Concepto | Cómo apareció aquí |
 |---|---|---|
-| [[Capitulo 03 - Contexto y Memoria\|Cap 3]] | Aislamiento de contexto | Cada sesión tiene su propio contexto — el cronista no sabe qué hace el ejecutor a menos que lo lea |
-| [[Capitulo 06 - Comandos CLI y Superficies\|Cap 6]] | Gap de visibilidad (§6.6) | `list_sessions` no encontró la sesión CLI → descubrimiento del prefijo `local_` |
-| [[Capitulo 06 - Comandos CLI y Superficies\|Cap 6]] | Lectura de JSONL | Workaround: leer el transcript directamente en `~/.claude/projects/` |
-| [[Capitulo 07 - MCP y Herramientas\|Cap 7]] | Herramientas MCP de sesión | `list_sessions` y `search_session_transcripts` son herramientas del servidor `ccd_session_mgmt` |
-| [[Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] | Límites del agente | El cronista tiene **prohibido** escribir fuera del vault — solo lee carpetas externas |
+| [[Claude Code Capitulo 03 - Contexto y Memoria\|Cap 3]] | Aislamiento de contexto | Cada sesión tiene su propio contexto — el cronista no sabe qué hace el ejecutor a menos que lo lea |
+| [[Claude Code Capitulo 06 - Comandos CLI y Superficies\|Cap 6]] | Gap de visibilidad (§6.6) | `list_sessions` no encontró la sesión CLI → descubrimiento del prefijo `local_` |
+| [[Claude Code Capitulo 06 - Comandos CLI y Superficies\|Cap 6]] | Lectura de JSONL | Workaround: leer el transcript directamente en `~/.claude/projects/` |
+| [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] | Herramientas MCP de sesión | `list_sessions` y `search_session_transcripts` son herramientas del servidor `ccd_session_mgmt` |
+| [[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] | Límites del agente | El cronista tiene **prohibido** escribir fuera del vault — solo lee carpetas externas |
 
 ### El hallazgo inesperado: el gap de visibilidad
 
@@ -122,10 +123,10 @@ No es solo un arreglo de conveniencia — es una **arquitectura de trabajo** que
 
 | Capítulo | Concepto | Cómo apareció aquí |
 |---|---|---|
-| [[Capitulo 02 - Arquitectura Conceptual\|Cap 2]] | Lectura y comprensión | La CLI leyó `instrucciones.md` (prompt TAREA) y el lineamiento (742 líneas) para entender el sistema completo |
-| [[Capitulo 06 - Comandos CLI y Superficies\|Cap 6]] | Elicitation (§6.4) | Opus 4.8 usó `AskUserQuestion` para hacer preguntas con opciones sobre cómo manejar URLs sensibles |
-| [[Capitulo 07 - MCP y Herramientas\|Cap 7]] | Herramienta nativa vs. MCP | La CLI usó herramientas nativas (Read, Edit) — no necesitó MCP porque todo era local |
-| [[Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] | Propuesta antes de actuar | Opus 4.8 propuso 3 cambios concretos y pidió confirmación antes de editar |
+| [[Claude Code Capitulo 02 - Arquitectura Conceptual\|Cap 2]] | Lectura y comprensión | La CLI leyó `instrucciones.md` (prompt TAREA) y el lineamiento (742 líneas) para entender el sistema completo |
+| [[Claude Code Capitulo 06 - Comandos CLI y Superficies\|Cap 6]] | Elicitation (§6.4) | Opus 4.8 usó `AskUserQuestion` para hacer preguntas con opciones sobre cómo manejar URLs sensibles |
+| [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] | Herramienta nativa vs. MCP | La CLI usó herramientas nativas (Read, Edit) — no necesitó MCP porque todo era local |
+| [[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] | Propuesta antes de actuar | Opus 4.8 propuso 3 cambios concretos y pidió confirmación antes de editar |
 
 ### El flujo de la sesión CLI
 
@@ -168,9 +169,9 @@ No es solo un arreglo de conveniencia — es una **arquitectura de trabajo** que
 
 | Capítulo | Concepto | Cómo apareció aquí |
 |---|---|---|
-| [[Capitulo 01 - Fundamentos y Filosofia\|Cap 1]] | Marcadores de certeza (§1.6) | La cadena 🔵→🟢→🟡→⚪ en acción: sin evidencia oficial, no se afirma |
-| [[Capitulo 06 - Comandos CLI y Superficies\|Cap 6]] | Fuente matriz (§6.1) | La documentación oficial es la autoridad final; fuentes de terceros no la reemplazan |
-| [[Capitulo 07 - MCP y Herramientas\|Cap 7]] | MCP (§7.4-7.5) | El contexto para entender qué haría `serve` si existiera |
+| [[Claude Code Capitulo 01 - Fundamentos y Filosofia\|Cap 1]] | Marcadores de certeza (§1.6) | La cadena 🔵→🟢→🟡→⚪ en acción: sin evidencia oficial, no se afirma |
+| [[Claude Code Capitulo 06 - Comandos CLI y Superficies\|Cap 6]] | Fuente matriz (§6.1) | La documentación oficial es la autoridad final; fuentes de terceros no la reemplazan |
+| [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] | MCP (§7.4-7.5) | El contexto para entender qué haría `serve` si existiera |
 
 ### La lección epistemológica
 
@@ -209,9 +210,9 @@ Esto aplica igual a documentación técnica que a datos en un dashboard de BI �
 
 | Capítulo | Concepto | Cómo apareció aquí |
 |---|---|---|
-| [[Capitulo 07 - MCP y Herramientas\|Cap 7]] | Llamadas paralelas vs. subagentes (§7.6) | Los 5 comandos fueron llamadas paralelas a herramientas, NO subagentes — resultados pequeños, necesarios en el contexto actual |
-| [[Capitulo 03 - Contexto y Memoria\|Cap 3]] | Protección del contexto | Si los resultados hubieran sido enormes (200 archivos), un subagente habría sido la decisión correcta |
-| [[Capitulo 02 - Arquitectura Conceptual\|Cap 2]] | Lectura del sistema | Claude "lee" el sistema de archivos igual que lee código — con herramientas de exploración |
+| [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] | Llamadas paralelas vs. subagentes (§7.6) | Los 5 comandos fueron llamadas paralelas a herramientas, NO subagentes — resultados pequeños, necesarios en el contexto actual |
+| [[Claude Code Capitulo 03 - Contexto y Memoria\|Cap 3]] | Protección del contexto | Si los resultados hubieran sido enormes (200 archivos), un subagente habría sido la decisión correcta |
+| [[Claude Code Capitulo 02 - Arquitectura Conceptual\|Cap 2]] | Lectura del sistema | Claude "lee" el sistema de archivos igual que lee código — con herramientas de exploración |
 
 ### La distinción que generó documentación nueva
 
@@ -283,4 +284,4 @@ Piensa en un cirujano aprendiendo cirugía. Puede leer todos los manuales (capí
 > 5. **"Verificar antes de afirmar"**: en ambos casos, algo que *debería* funcionar (un comando, una herramienta) no funciona, y la investigación en la fuente primaria revela por qué. Es relevante para un analista de datos porque el mismo patrón aplica a datos en dashboards: un dato consistente en cinco reportes puede estar mal si todos beben de la misma fuente corrupta — la cadena de verificación es: dato → fuente primaria → evidencia directa → marcador de confianza.
 
 ---
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Capitulo 10 - Mejores Practicas]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Claude Code Capitulo 10 - Mejores Practicas]]

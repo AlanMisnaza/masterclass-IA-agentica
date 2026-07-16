@@ -15,16 +15,19 @@ Comparativas/
   Comparativa por Capitulo.md      (tema a tema: contexto vs contexto, permisos vs permisos...)
 Claude Code/
   Claude Code - Mapa de Contenidos.md
-  Capitulos/Capitulo 01..10 - *.md
+  Capitulos/Claude Code Capitulo 01..10 - *.md   (guía completa 9/10; falta el 10)
 Antigravity/
-  Antigravity - Mapa de Contenidos.md   (esqueleto espejo; lo llena Antigravity)
-  Capitulos/                            (vacía hasta que Antigravity escriba)
+  Antigravity - Mapa de Contenidos.md
+  Capitulos/Antigravity Capitulo 01..10 - *.md   (guía completa 9/10; el 9 se escribe con el usuario)
 Recursos/Glosario.md, Mapa Mental.md, Plan de Estudio 7 Dias.md, Documentos Oficiales.md,
-  Plantilla - Como añadir una herramienta.md, Plan Masterclass de IA Agentica.md (histórico)
+  Plantilla - Como añadir una herramienta.md, Prompt de arranque - Antigravity.md,
+  Plan Masterclass de IA Agentica.md (histórico)
 .claude/settings.json                 (WebSearch/WebFetch auto-aprobados en este proyecto)
 ```
 
-Nota Obsidian: los enlaces `[[wiki]]` son por **nombre de archivo**, no por ruta — mover archivos entre carpetas no rompe enlaces mientras los nombres no cambien. **No renombrar archivos existentes.**
+Nota Obsidian: los enlaces `[[wiki]]` son por **nombre de archivo**, no por ruta — mover archivos entre carpetas no rompe enlaces mientras los nombres no cambien.
+
+**Convención de nombres de capítulo (vigente desde 2026-07-15):** `<Herramienta> Capitulo NN - <Tema>.md`, con el mismo `<Tema>` espejo en todas las guías (p. ej. `Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes.md` ↔ `Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes.md`). El prefijo evita colisiones de `[[wiki]]`, identifica el origen de un vistazo y hace las guías comparables archivo a archivo. Renombrar un archivo existente exige actualizar **todos** los `[[wiki]]` que lo referencian en el mismo cambio — nunca dejar enlaces rotos.
 
 ## Estructura espejo de capítulos (plantilla de toda guía nueva)
 

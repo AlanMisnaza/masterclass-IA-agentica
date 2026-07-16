@@ -1,6 +1,7 @@
 ---
 tags:
   - claude-code
+  - masterclass
   - capitulo-06
   - cli
   - comandos
@@ -12,7 +13,7 @@ creado: 2026-07-06
 
 # Capítulo 6 — Comandos, CLI y Superficies de Claude Code
 
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Capitulo 05 - Git y Control de Versiones]] · Siguiente → [[Capitulo 07 - MCP y Herramientas]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Claude Code Capitulo 05 - Git y Control de Versiones]] · Siguiente → [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes]]
 
 > [!tip] Por qué existe este capítulo (y no estaba en el plan original)
 > Surgió de una observación tuya, legítima y certera: llevábamos cinco capítulos hablando de Claude Code sin explicar cómo se usan sus comandos — y toda esta guía se ha construido desde una app, no desde la terminal. Este capítulo cierra ese hueco y te deja listo para **abrir la CLI en una sesión paralela y trabajar desde ahí**.
@@ -220,7 +221,7 @@ Shift+Tab →  "manual mode on"  · ← for agents
 
 ### Elicitation: cuando Claude te hace preguntas estructuradas en la CLI
 
-🟢 *Observable de primera mano (2026-07-08, sesión CLI del asistente GPT):* además de texto libre, Claude puede hacerte **preguntas con opciones** dentro de la terminal — un formulario interactivo que aparece directamente en la línea de comandos. Técnicamente es la herramienta `AskUserQuestion` (la misma "elicitation" que documentamos en el [[Capitulo 07 - MCP y Herramientas#7.2 Qué expone un servidor las tres primitivas|Capítulo 7 §7.2]] como primitiva MCP), pero aquí la usa el propio Claude Code, no un servidor externo.
+🟢 *Observable de primera mano (2026-07-08, sesión CLI del asistente GPT):* además de texto libre, Claude puede hacerte **preguntas con opciones** dentro de la terminal — un formulario interactivo que aparece directamente en la línea de comandos. Técnicamente es la herramienta `AskUserQuestion` (la misma "elicitation" que documentamos en el [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes#7.2 Qué expone un servidor las tres primitivas|Capítulo 7 §7.2]] como primitiva MCP), pero aquí la usa el propio Claude Code, no un servidor externo.
 
 **Lo que ves en la terminal:**
 
@@ -562,4 +563,4 @@ Piensa en un automóvil moderno: el mismo motor puede conducirse desde el volant
 > 10. `Needs input` significa que la sesión **fue creada pero nunca recibió su primer mensaje** — está literalmente esperando que le envíes un prompt para arrancar ("send a prompt to start"). `Idle`, en cambio, es una sesión que **ya tuvo actividad** y ahora está simplemente a la espera, sin trabajo pendiente inmediato. La diferencia es "nunca empezó" vs. "empezó y ahora está en pausa".
 
 ---
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Capitulo 07 - MCP y Herramientas]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes]]

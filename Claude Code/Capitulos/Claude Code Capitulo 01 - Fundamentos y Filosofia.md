@@ -1,6 +1,7 @@
 ---
 tags:
   - claude-code
+  - masterclass
   - capitulo-01
   - fundamentos
   - filosofia
@@ -11,7 +12,10 @@ creado: 2026-07-04
 
 # Capítulo 1 — Fundamentos y Filosofía de Claude Code
 
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Capitulo 02 - Arquitectura Conceptual]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Claude Code Capitulo 02 - Arquitectura Conceptual]]
+
+> [!tip] La pregunta de este capítulo
+> ¿Qué convierte a una herramienta de IA en un **agente**? Este capítulo define qué es Claude Code, qué problema fue diseñado para resolver, su filosofía de diseño ("bajo nivel y sin opiniones") — y establece el marco epistemológico (🔵🟢🟡⚪) que gobierna toda la guía.
 
 ## 1.1 ¿Qué es Claude Code?
 
@@ -20,7 +24,7 @@ creado: 2026-07-04
 - tu sistema de archivos (puede leer y escribir archivos),
 - tu terminal (puede ejecutar comandos: `npm test`, `git diff`, `python script.py`...),
 - tu control de versiones (Git),
-- y, mediante MCP (lo veremos en el [[Capitulo 07 - MCP y Herramientas|Capítulo 7]]), a servicios externos (bases de datos, APIs, navegadores, etc.).
+- y, mediante MCP (lo veremos en el [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes|Capítulo 7]]), a servicios externos (bases de datos, APIs, navegadores, etc.).
 
 🔵 *Documentado oficialmente*: Anthropic describe Claude Code como "an agentic coding tool that lives in your terminal" — vive en tu terminal, entiende tu base de código y te ayuda a programar más rápido mediante comandos en lenguaje natural.
 
@@ -88,7 +92,7 @@ Esta filosofía es heredera directa de la **filosofía Unix** clásica: herramie
 
 ## 1.4 Cómo interactúa con un proyecto de software (panorama general)
 
-A un nivel muy alto —lo detallaremos con precisión en los capítulos [[Capitulo 02 - Arquitectura Conceptual|2]] a [[Capitulo 04 - Planificacion y Flujo de Trabajo|4]]— cada turno de trabajo de Claude Code sigue un ciclo:
+A un nivel muy alto —lo detallaremos con precisión en los capítulos [[Claude Code Capitulo 02 - Arquitectura Conceptual|2]] a [[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo|4]]— cada turno de trabajo de Claude Code sigue un ciclo:
 
 ```
  1. RECIBE           tu instrucción en lenguaje natural
@@ -118,7 +122,7 @@ Es tan importante delimitar el concepto por lo que no es, para evitar modelos me
 | Idea errónea | Realidad |
 |---|---|
 | "Es autocompletado más inteligente" | El autocompletado (como el de un IDE) predice la siguiente línea mientras escribes tú. Claude Code recibe una instrucción y **decide y ejecuta una secuencia completa de acciones** de forma autónoma. |
-| "Ya conoce todo mi proyecto de antemano" | No tiene conocimiento previo de tu repo específico. Debe **leerlo activamente** cada vez (aunque puede reutilizar contexto ya leído dentro de una misma sesión, y puedes darle notas persistentes vía `CLAUDE.md`, ver [[Capitulo 03 - Contexto y Memoria]]). |
+| "Ya conoce todo mi proyecto de antemano" | No tiene conocimiento previo de tu repo específico. Debe **leerlo activamente** cada vez (aunque puede reutilizar contexto ya leído dentro de una misma sesión, y puedes darle notas persistentes vía `CLAUDE.md`, ver [[Claude Code Capitulo 03 - Contexto y Memoria]]). |
 | "Actúa siempre sin supervisión, como magia" | Por defecto, pide confirmación antes de acciones potencialmente sensibles (editar archivos, ejecutar comandos). El nivel de autonomía es configurable, no fijo. |
 | "Tiene acceso a internet por defecto" | Solo tiene las capacidades que se le han conectado explícitamente (herramientas nativas + servidores MCP que configures). No navega la web salvo que exista una herramienta para ello. |
 | "Recuerda conversaciones pasadas automáticamente" | Cada sesión de terminal es, por defecto, independiente. La continuidad se logra con mecanismos explícitos de memoria (`CLAUDE.md`, resúmenes, etc.), no por defecto "recordando" como una persona. |
@@ -173,4 +177,4 @@ Piensa en la diferencia entre **enviarle un plano a un contratista por correo** 
 > 5. 🔵 documentado: "Claude Code puede conectarse a servidores MCP" (hecho verificable en la documentación oficial). 🟡 simplificación pedagógica: "decide qué archivo leer sopesando relevancia" (modelo mental útil, no una descripción literal del mecanismo interno del modelo).
 
 ---
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Capitulo 02 - Arquitectura Conceptual]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Claude Code Capitulo 02 - Arquitectura Conceptual]]

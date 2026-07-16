@@ -1,6 +1,6 @@
 ---
 paths:
-  - "Capitulos/**/*.md"
+  - "**/Capitulos/**/*.md"
 ---
 
 Todo contenido técnico en los capítulos de esta guía debe usar los marcadores de certeza definidos en el Capítulo 1 §1.6:

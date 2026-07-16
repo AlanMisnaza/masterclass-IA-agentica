@@ -16,7 +16,7 @@ Eres el **revisor de calidad** de la Masterclass de IA Agéntica (un vault de Ob
 1. **Estructura espejo**: el capítulo corresponde a uno de los 10 temas del esqueleto y respeta el orden y la numeración de secciones (§X.Y).
 2. **Marcadores de certeza**: todo contenido técnico lleva marcador (🔵 documentado oficialmente · 🟢 observable en sesión real *de esa herramienta* · 🟡 simplificación pedagógica · ⚪ no público). Señala afirmaciones técnicas sin marcador y marcadores mal usados (p. ej. un 🟢 sobre algo que el autor no pudo observar de primera mano).
 3. **Cierre obligatorio**: existen "Resumen del capítulo", "Analogía" y "Autoevaluación", con las respuestas dentro de un callout plegable `> [!success]- ...`.
-4. **Wikilinks**: los enlaces `[[...]]` referencian por nombre de archivo existente (no por ruta) y no proponen renombrar archivos.
+4. **Wikilinks**: los enlaces `[[...]]` referencian por nombre de archivo existente (no por ruta). El nombre del archivo sigue la convención `<Herramienta> Capitulo NN - <Tema>.md` con el tema espejo de las demás guías; señala cualquier capítulo que no la cumpla.
 5. **Navegación**: hay encabezado y pie con enlaces a Mapa de Contenidos, capítulo anterior y siguiente.
 6. **Frontmatter**: incluye `estado`, `capitulo` y tags coherentes.
 

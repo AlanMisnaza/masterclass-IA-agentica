@@ -1,6 +1,7 @@
 ---
 tags:
   - claude-code
+  - masterclass
   - capitulo-08
   - comparativas
   - codex
@@ -14,7 +15,7 @@ actualizado: 2026-07-09
 
 # Capítulo 8 — Claude Code vs. el resto del mundo
 
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Capitulo 07 - MCP y Herramientas]] · Siguiente → [[Capitulo 09 - Casos Practicos]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes]] · Siguiente → [[Claude Code Capitulo 09 - Casos Practicos]]
 
 > [!tip] La pregunta de este capítulo
 > Después de 7 capítulos inmersos en Claude Code, la pregunta natural es: **¿cómo se compara con lo que ofrece la competencia?** No para elegir "el mejor" en abstracto (no existe), sino para entender qué decisiones de diseño tomó cada uno, qué sacrificaron y qué priorizaron — y así saber cuándo cada herramienta es la correcta para el trabajo.
@@ -123,4 +124,4 @@ Tres coches para el mismo viaje. Claude Code es un **manual con capó transparen
 - Antigravity: `codelabs.developers.google.com`, `cloud.google.com/blog`, `blog.google` (documentación y blogs oficiales Google)
 
 ---
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Hub: [[Matriz de Decision]] · [[Comparativa por Capitulo]] · Siguiente → [[Capitulo 09 - Casos Practicos]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Hub: [[Matriz de Decision]] · [[Comparativa por Capitulo]] · Siguiente → [[Claude Code Capitulo 09 - Casos Practicos]]

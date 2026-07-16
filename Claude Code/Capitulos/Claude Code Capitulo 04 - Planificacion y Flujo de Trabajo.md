@@ -1,6 +1,7 @@
 ---
 tags:
   - claude-code
+  - masterclass
   - capitulo-04
   - planificacion
 estado: completo
@@ -10,7 +11,10 @@ creado: 2026-07-05
 
 # Capítulo 4 — Planificación y Flujo de Trabajo de Cambios
 
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Capitulo 03 - Contexto y Memoria]] · Siguiente → [[Capitulo 05 - Git y Control de Versiones]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Claude Code Capitulo 03 - Contexto y Memoria]] · Siguiente → [[Claude Code Capitulo 05 - Git y Control de Versiones]]
+
+> [!tip] La pregunta de este capítulo
+> Las instrucciones humanas casi nunca traen toda la información necesaria para actuar bien. ¿Cómo decide un agente cuándo preguntar, cuándo proponer y seguir, y qué controles (Plan Mode, permisos, verificación obligatoria) impiden que actúe mal sobre tu proyecto?
 
 ## 4.1 El problema: instrucciones ambiguas y el costo de actuar mal
 
@@ -115,4 +119,4 @@ Un cirujano no opera apenas escucha el síntoma: primero pide los exámenes que 
 > 5. En la rama "¿es ambigua o tiene consecuencias reales/difíciles de revertir? → sí → presentar opciones y esperar respuesta" — ahí se ubica la pregunta sobre qué hacer con `feature/notificacion-teams`.
 
 ---
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Capitulo 05 - Git y Control de Versiones]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Claude Code Capitulo 05 - Git y Control de Versiones]]

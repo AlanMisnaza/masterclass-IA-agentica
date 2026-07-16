@@ -16,8 +16,8 @@ Este vault es una **Masterclass multi-herramienta sobre IA agéntica**: cada her
 
 | Guía            | Autor                   | Estado           | Punto de entrada                                    |
 | --------------- | ----------------------- | ---------------- | --------------------------------------------------- |
-| **Claude Code** | Claude Code (Anthropic) | ✅ 9/10 capítulos | [[Claude Code - Mapa de Contenidos]]                |
-| **Antigravity** | Antigravity (Google)    | ⏳ 0/10 capítulos | [[Antigravity - Mapa de Contenidos]]                |
+| **Claude Code** | Claude Code (Anthropic) | ✅ 9/10 capítulos (falta el 10) | [[Claude Code - Mapa de Contenidos]]                |
+| **Antigravity** | Antigravity (Google)    | ✅ 9/10 capítulos (falta el 9, se escribe con el usuario) | [[Antigravity - Mapa de Contenidos]]                |
 | **Codex**       | Codex (OpenAI)          | 🔮 Futuro        | — (ver [[Plantilla - Como añadir una herramienta]]) |
 
 ## ⚖️ Comparativas — el hub transversal
@@ -49,6 +49,8 @@ Toda guía de herramienta sigue este esqueleto temático (adaptando lo específi
 | 9 | Casos prácticos con sesiones reales |
 | 10 | Mejores prácticas |
 
+**Convención de nombres de capítulo** (desde 2026-07-15): todo capítulo se nombra `<Herramienta> Capitulo NN - <Tema>.md` — p. ej. `Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes.md` y `Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes.md`. El prefijo evita colisiones de `[[wiki]]` (Obsidian enlaza por nombre de archivo), identifica el origen de un vistazo y mantiene los nombres de tema espejo entre guías.
+
 Reglas de toda la Masterclass (heredadas de la guía original de Claude Code):
 - **Marcadores de certeza obligatorios** en contenido técnico (ver encuadre abajo).
 - Cada capítulo cierra con: **resumen, analogía y autoevaluación** con respuestas plegables.
@@ -68,7 +70,7 @@ Reglas de toda la Masterclass (heredadas de la guía original de Claude Code):
 
 ## Encuadre epistemológico — marcadores relativos al autor
 
-Todo el contenido técnico del vault se etiqueta con estos marcadores (definidos en el [[Capitulo 01 - Fundamentos y Filosofia#1.6 Información pública vs. simplificación pedagógica|§1.6 del Capítulo 1]] de la guía de Claude Code):
+Todo el contenido técnico del vault se etiqueta con estos marcadores (definidos en el [[Claude Code Capitulo 01 - Fundamentos y Filosofia#1.6 Información pública vs. simplificación pedagógica|§1.6 del Capítulo 1]] de la guía de Claude Code):
 
 - 🔵 **Documentado oficialmente** por el fabricante (se cita la fuente cuando es posible).
 - 🟢 **Observable directamente en una sesión real** — y aquí está la clave multi-herramienta: **el marcador es relativo al autor de la guía**. Un 🟢 en la guía de Antigravity significa "observado en una sesión real de Antigravity"; en la de Claude Code, "observado en una sesión real de Claude Code".

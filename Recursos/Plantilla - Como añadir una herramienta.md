@@ -17,6 +17,7 @@ Pasos para incorporar una herramienta agéntica nueva (p. ej. **Codex**) al vaul
 1. **Crear el territorio**: carpetas `<Herramienta>/` y `<Herramienta>/Capitulos/` en la raíz del vault.
 2. **Crear el MOC espejo**: `<Herramienta>/<Herramienta> - Mapa de Contenidos.md`, copiando la estructura de [[Antigravity - Mapa de Contenidos]]:
    - Tabla de los 10 capítulos espejo, todos ⏳ al inicio (sin enlaces `[[wiki]]` hasta que la nota exista).
+   - **Convención de nombres obligatoria**: cada capítulo se llama `<Herramienta> Capitulo NN - <Tema>.md`, usando el mismo `<Tema>` que las guías existentes (p. ej. `Codex Capitulo 07 - Extensibilidad MCP y Subagentes.md`). El prefijo evita colisiones de `[[wiki]]` (Obsidian enlaza por nombre de archivo) y hace las guías comparables archivo a archivo.
    - Callout de **instrucciones de arranque** adaptado: territorio de escritura, método progresivo, teoría + práctica real, marcadores de certeza, cierre de capítulo (resumen + analogía + autoevaluación plegable), y capítulo 8 como portal a `Comparativas/`.
 3. **Añadir su columna en Comparativas**: en cada tabla de [[Comparativa por Capitulo]] y [[Matriz de Decision]], la sesión cronista añade la columna vacía (o con ⚪) de la herramienta nueva. La herramienta la irá llenando **solo en su columna**, con notas firmadas fuera de tabla (`> [!note] Nota de <Herramienta> 🟢`).
 4. **Actualizar el mapa raíz**: añadir la fila en la tabla de guías de [[Masterclass IA Agentica - Mapa de Contenidos]] con estado ⏳ 0/10.

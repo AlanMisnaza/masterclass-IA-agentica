@@ -1,6 +1,7 @@
 ---
 tags:
   - claude-code
+  - masterclass
   - capitulo-02
   - arquitectura
 estado: completo
@@ -10,7 +11,7 @@ creado: 2026-07-05
 
 # Capítulo 2 — Arquitectura Conceptual: cómo "entiende" una base de código
 
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Capitulo 01 - Fundamentos y Filosofia]] · Siguiente → [[Capitulo 03 - Contexto y Memoria]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Claude Code Capitulo 01 - Fundamentos y Filosofia]] · Siguiente → [[Claude Code Capitulo 03 - Contexto y Memoria]]
 
 > [!tip] Ejemplo central de este capítulo
 > Todo este capítulo usa un caso 🟢 **real de esta misma sesión**: explorar y empezar a contribuir al repositorio `transversal-analitica-institucional` de la Célula de Analítica Institucional. No es un ejemplo inventado — es el rastro real de decisiones que se tomaron para entender ese repo antes de tocar nada.
@@ -87,13 +88,13 @@ La duplicación en la documentación del repo (la tabla "Ficha Técnica" y la es
 └───────────────────────────────────────────────────────────────────────────┘
 ```
 
-🔵 *Documentado*: esta ventana no es infinita, y cuando una conversación se alarga mucho, su contenido se **compacta** (se resume) para seguir cabiendo — ese mecanismo se explica a fondo en el [[Capitulo 03 - Contexto y Memoria|Capítulo 3]]. Por ahora basta con entender que "usar el contexto" significa literalmente esto: mantener información ya recolectada disponible para cruzarla más adelante en la misma sesión, dentro de un espacio finito.
+🔵 *Documentado*: esta ventana no es infinita, y cuando una conversación se alarga mucho, su contenido se **compacta** (se resume) para seguir cabiendo — ese mecanismo se explica a fondo en el [[Claude Code Capitulo 03 - Contexto y Memoria|Capítulo 3]]. Por ahora basta con entender que "usar el contexto" significa literalmente esto: mantener información ya recolectada disponible para cruzarla más adelante en la misma sesión, dentro de un espacio finito.
 
 ## 2.4 Cómo planifica cambios antes de escribir código
 
 Antes de crear la rama nueva o escribir el README, se presentó explícitamente la disyuntiva de qué hacer con la rama `feature/notificacion-teams` (que tenía archivos sin commitear) y se esperó tu decisión antes de ejecutar cualquier comando de Git.
 
-🔵 *Documentado*: Claude Code tiene un modo formal para esto llamado **Plan Mode**, en el que solo lee y propone, sin ejecutar ediciones, hasta que el plan se aprueba explícitamente. Lo veremos en detalle en el [[Capitulo 04 - Planificacion y Flujo de Trabajo|Capítulo 4]].
+🔵 *Documentado*: Claude Code tiene un modo formal para esto llamado **Plan Mode**, en el que solo lee y propone, sin ejecutar ediciones, hasta que el plan se aprueba explícitamente. Lo veremos en detalle en el [[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo|Capítulo 4]].
 
 ⚠️ *Precisión importante*: lo que ocurrió en esta sesión **no fue formalmente Plan Mode** (no se activó ese modo específico) — fue el comportamiento general de plantear una decisión con consecuencias reales y esperar confirmación antes de actuar. Es la misma filosofía, pero conviene no confundir el patrón general con la función concreta que lleva ese nombre. Esta distinción es exactamente el tipo de precisión que exige el marco 🔵/🟢/🟡/⚪ del Capítulo 1: no todo lo que "parece" una función documentada lo es.
 
@@ -159,4 +160,4 @@ Piensa en un perito que llega a inspeccionar un edificio que nunca ha visto. No 
 > 5. Ejemplos: sub-ciclo 1 respondía "¿ya existe un clon de este repo?"; sub-ciclo 2 respondía "¿dónde vive la documentación y hay algo raro en ella?"; sub-ciclo 3 respondía "¿qué hacemos con la rama que ya tenía trabajo sin commitear?".
 
 ---
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Capitulo 03 - Contexto y Memoria]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Claude Code Capitulo 03 - Contexto y Memoria]]

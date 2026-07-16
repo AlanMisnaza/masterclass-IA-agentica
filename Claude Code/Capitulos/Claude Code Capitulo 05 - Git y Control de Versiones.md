@@ -1,6 +1,7 @@
 ---
 tags:
   - claude-code
+  - masterclass
   - capitulo-05
   - git
 estado: completo
@@ -10,7 +11,7 @@ creado: 2026-07-05
 
 # Capítulo 5 — Git y Control de Versiones
 
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Capitulo 04 - Planificacion y Flujo de Trabajo]] · Siguiente → [[Capitulo 06 - Comandos CLI y Superficies]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Anterior: [[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo]] · Siguiente → [[Claude Code Capitulo 06 - Comandos CLI y Superficies]]
 
 > [!warning] Este capítulo incluye un error real, mío, sin pulir
 > No es un ejemplo de otro — es algo que hice yo en esta misma sesión y que, al revisarlo para escribir este capítulo, encontré impreciso. Lo dejo tal cual, en la §5.5, porque es mejor evidencia de "cómo evitar errores con Git" que cualquier ejemplo inventado sin errores.
@@ -85,4 +86,4 @@ Un editor de textos que trabaja para una revista no impone su propio manual de e
 > 5. El Capítulo 1 (§1.3) describe a Claude Code como una herramienta sin opiniones impuestas, que se integra al flujo de trabajo existente en vez de forzar el suyo; adoptar la convención de commits ya documentada por el repo en vez de traer una genérica es la misma filosofía aplicada a Git específicamente.
 
 ---
-[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Capitulo 06 - Comandos CLI y Superficies]]
+[[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Claude Code Capitulo 06 - Comandos CLI y Superficies]]
