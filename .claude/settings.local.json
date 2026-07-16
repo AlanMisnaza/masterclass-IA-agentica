@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($c = [System.IO.File]::ReadAllText\\(\"CLAUDE.md\", [Text.Encoding]::UTF8\\); if \\($c -match '\\\\[\\\\[Plantilla - Como añadir una herramienta\\\\]\\\\]'\\) { \"CLAUDE.md: enlace plantilla OK \\(era artefacto de encoding\\)\" }; $m = [System.IO.File]::ReadAllText\\(\"Masterclass IA Agentica - Mapa de Contenidos.md\", [Text.Encoding]::UTF8\\); if \\($m -match '\\\\[\\\\[Plantilla - Como añadir una herramienta'\\) { \"Masterclass MOC: enlace plantilla OK\" })"
+    ]
+  }
+}
