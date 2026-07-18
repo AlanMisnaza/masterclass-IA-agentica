@@ -1,0 +1,24 @@
+# Finales de línea del vault — fijados a nivel repositorio.
+#
+# Motivo: el instalador de Git para Windows define core.autocrlf=true a nivel
+# "system", lo que hace que Git espere CRLF en el working tree y marque como
+# "modificados" archivos que solo cambian en el fin de línea (LF -> CRLF),
+# aunque su contenido sea idéntico. Este archivo anula ese comportamiento y
+# obliga a LF de forma determinista en cualquier máquina (Windows, Linux/nube).
+#
+# LF es la elección correcta para un vault multi-herramienta y multi-SO: las
+# notas son Markdown plano y las sesiones en la nube corren sobre Linux.
+
+# Todo lo textual: autodetección + checkout en LF (anula core.autocrlf).
+* text=auto eol=lf
+
+# Binarios comunes: nunca normalizar (text=auto ya los detecta; esto es
+# una salvaguarda explícita para adjuntos típicos de un vault Obsidian).
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.pdf  binary
+*.zip  binary
+*.excalidraw binary
