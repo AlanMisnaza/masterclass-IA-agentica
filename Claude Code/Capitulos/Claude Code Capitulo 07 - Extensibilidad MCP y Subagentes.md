@@ -6,10 +6,11 @@ tags:
   - mcp
   - herramientas
   - subagentes
+  - skills
 estado: completo
 capitulo: 7
 creado: 2026-07-04
-actualizado: 2026-07-15
+actualizado: 2026-07-18
 ---
 
 # Capítulo 7 — Extensibilidad: MCP, Subagentes y Skills
@@ -59,7 +60,7 @@ Dos capacidades adicionales documentadas que completan el cuadro:
 | **stdio** | Un proceso local en tu máquina (ej. `npx servidor`) | Herramientas con acceso directo a tu sistema; scripts propios |
 | **WebSocket** | Conexión bidireccional persistente | Servidores que empujan eventos; no soporta OAuth ni el flag `--transport` (se configura por JSON) |
 
-Los comandos esenciales (todos documentados; los probarás en §7.9):
+Los comandos esenciales (todos documentados; los probarás en §7.10):
 
 ```bash
 claude mcp add --transport http <nombre> <url>     # remoto HTTP
@@ -110,7 +111,7 @@ Cuatro observaciones de primera mano que confirman la teoría:
 
 3. **Llamada real #1 — resultado vacío también es dato**: busqué `"obsidian"` en el registro de conectores de Anthropic y la respuesta fue `{"results":[]}` — JSON estructurado, como toda respuesta MCP. Hallazgo real: a hoy, no hay conector oficial de Obsidian en el registro (este vault se edita con herramientas nativas de archivo, y por eso funciona igual de bien: las notas son Markdown plano).
 
-4. **Llamada real #2 — un servidor describiéndose a sí mismo**: le pregunté al servidor MCP de Microsoft Learn por su propia documentación de conexión. Respondió con las páginas oficiales que confirman su endpoint (`https://learn.microsoft.com/api/mcp`), su transporte (HTTP streamable) y que no requiere autenticación. Ese dato alimenta directamente tu práctica de §7.9.
+4. **Llamada real #2 — un servidor describiéndose a sí mismo**: le pregunté al servidor MCP de Microsoft Learn por su propia documentación de conexión. Respondió con las páginas oficiales que confirman su endpoint (`https://learn.microsoft.com/api/mcp`), su transporte (HTTP streamable) y que no requiere autenticación. Ese dato alimenta directamente tu práctica de §7.10.
 
 ## 7.6 Subagentes: delegar en vez de enchufar
 
@@ -200,7 +201,77 @@ Tres hallazgos que **no** se ven leyendo el `.md` del agente ni la documentació
 
 Bonus observado en el mismo audit: en una de las seis invocaciones, el orquestador sugirió el tipo de commit `chore` (por convención de `.gitignore`), pero el subagente **razonó distinto y eligió `fix`** porque el cambio real cerraba un hueco de seguridad de datos — ejemplo concreto de "qué decide él mismo" de la tabla de §7.6.
 
-## 7.7 ¿Herramienta nativa, MCP, subagente o skill?
+## 7.7 Skills: recetas que Claude sabe seguir
+
+MCP le da a Claude más **manos** (§7.1–7.5); un subagente le da **otro par de manos con su propia mesa** (§7.6). Una **skill** es la tercera vía y no es ni lo uno ni lo otro: es una **receta** — un procedimiento repetible, escrito una vez, que Claude (o tú) invoca cuando la tarea encaja. La tabla de decisión de §7.8 lo resume así: *le falta una **capacidad** → MCP; le sobra **trabajo** → subagente; le falta **procedimiento** → skill.*
+
+🔵 Anatomía (fuente: `code.claude.com/docs/en/skills`). Una skill es una carpeta con un archivo **`SKILL.md`**: frontmatter YAML con dos campos **obligatorios** — `name` (≤64 caracteres, debe coincidir con el nombre de la carpeta) y `description` (el texto que Claude lee para decidir cuándo activarla) — y un **cuerpo** en Markdown con las instrucciones. Puede además traer archivos y scripts auxiliares en la misma carpeta.
+
+🟡 La diferencia con un subagente, en una frase: **el subagente es *quién*; la skill es *el instructivo*.** El mismo Claude sigue la skill sin abrir otra ventana de contexto; un subagente sí es otro Claude aparte con su propia mesa.
+
+### 7.7.1 De dónde salen: los cuatro orígenes
+
+Esta subsección nació de una pregunta concreta del usuario — *"¿cómo accede Claude a las skills que subí a Claude online?"* — y la respuesta corta es: **no las lee de tu disco; llegan desde el servidor, atadas a tu cuenta.** Los cuatro orígenes posibles, con lo que encontré **de primera mano** en esta máquina (2026-07-18):
+
+| Origen | Dónde vive | ¿Compartida? | 🟢 En esta máquina |
+|---|---|---|---|
+| **Personal (disco)** | `~/.claude/skills/` | Privada tuya | **No existe la carpeta** |
+| **Proyecto (disco)** | `.claude/skills/` (+ anidadas en subcarpetas, para monorepos) | Sí, vía Git | **No existe la carpeta** |
+| **Plugin / marketplace** | `~/.claude/plugins/marketplaces/<marketplace>/…` | Según el marketplace | **1 marketplace** (`claude-plugins-official`) |
+| **Cuenta / organización** | **Servidor de Anthropic** (subidas en claude.ai o el panel de tu organización) | Según tu cuenta/org | **No en disco, pero sí en mi lista** |
+
+🔵 Los tres primeros orígenes y sus rutas están documentados (`code.claude.com/docs/en/skills` y `.../discover-plugins`); las skills de cuenta/organización se guardan **del lado servidor** — al subirlas por *Ajustes → Personalizar* del app de escritorio o el panel de administración de la organización, **no se copian a tu disco** (fuente: Centro de ayuda de Claude, *Provision and manage skills* / *Use skills in Claude*).
+
+**La prueba de primera mano** de que ese cuarto origen existe está en esta misma sesión: en mi lista de skills disponibles aparece `estandarizacion-construccion-sql` — que es claramente *tuya o de tu organización* (habla de Oracle 23c, tablas `DIM_`/`FCT_`/`STG_`, DWH, Power BI), no una skill genérica de Anthropic. 🟢 Verifiqué en disco las tres ubicaciones locales posibles y ninguna la contiene (ni existen las carpetas de skills):
+
+```bash
+ls ~/.claude/skills/                         # → (no existe la carpeta)
+ls .claude/skills/                           # → (no existe la carpeta) en el proyecto
+find ~/.claude -iname "*estandarizacion*"    # → (nada): tampoco está como plugin
+```
+
+🟢 **No está en ningún archivo local, y aun así puedo invocarla.** La única explicación es que llegó desde tu cuenta de Claude, por el servidor. (La carpeta `~/.claude/projects/…IA-skills/` que sí aparece son *transcripts* `.jsonl` de una sesión donde la construiste —el mismo tipo de archivo del workaround de §6.7—, no la skill en sí.)
+
+> [!important] El matiz que lo cambia todo: app/Cloud sí, CLI no
+> 🔵 Las skills de cuenta/organización **solo bajan a las sesiones del app de escritorio (Cowork) y a las sesiones en la nube**; una sesión **de CLI pura** (`claude` en tu terminal) ve *únicamente* los archivos locales (`~/.claude/skills/` y `.claude/skills/`) — **no** recibe las de tu cuenta (fuente: Centro de ayuda de Claude).
+> 🟢 Lo observado en esta sesión (app): `estandarizacion-construccion-sql` aparece en mi lista pese a no existir en disco. 🔵 De ahí, por lo documentado, se sigue que **no** estaría disponible si abrieras `claude` en una terminal, salvo que además la tuvieras como archivo local — pero eso es inferencia de la doc, aún **no** comprobado en una CLI real (lo propone la práctica de §7.7.2). Es la misma frontera app↔CLI del protocolo de dos sesiones (Cap. 6 §6.6): la sesión cronista (app) ve las skills de tu cuenta; una CLI cruda, no.
+
+**Cómo "accede" Claude, con precisión.** Igual que con los esquemas de herramientas MCP (§7.5, *tool search*), hay **dos niveles** — y esto es *progressive disclosure*:
+1. 🔵 **Descubrimiento** (siempre): el harness me entrega, al arrancar el turno, solo el **nombre + la descripción de una línea** de cada skill habilitada. Todavía **no tengo su contenido**; la descripción es mi único criterio para decidir cuándo activarla (por eso son tan detalladas).
+2. 🔵 **Carga real** (solo al invocar): cuando la tarea encaja, llamo a la herramienta `Skill` (o tú escribes `/nombre-de-la-skill`), y **ahí** el cuerpo completo y sus archivos entran en mi contexto.
+
+🟡 La biblioteca otra vez: la lista de skills es el **índice** — veo todos los lomos con su resumen de contraportada, pero el libro sigue en el estante hasta que pido uno concreto (invocarlo). No leo la biblioteca entera "por si acaso": sería insostenible para la ventana de contexto (Cap. 3).
+
+### 7.7.2 Cómo mantenerlas siempre actualizadas
+
+No hay un único botón de "actualizar": mantener una skill al día depende de **por cuál de los cuatro orígenes llega**. Origen por origen:
+
+**a) Skills en disco (personal y proyecto).**
+🔵 Editar el contenido de un `SKILL.md` existente se detecta **en caliente, sin reiniciar** la sesión (Claude Code vigila los cambios). La excepción: si creas la carpeta `skills/` de nivel superior *por primera vez* cuando antes no existía, suele hacer falta reiniciar la sesión para que el watcher la detecte. 🟢 Es el mismo comportamiento que vimos al crear el subagente `revisor-capitulos` en §7.6 — el watcher lo registró sin reiniciar. Para skills de **equipo**, versiónalas en `.claude/skills/` dentro del repo: "actualizar" se vuelve un `git pull` normal (misma lógica que `.mcp.json` en §7.4). Es el método más robusto: la fuente de verdad es Git y todo el equipo converge al hacer pull.
+
+**b) Skills de plugin / marketplace.**
+🔵 Se actualizan actualizando su marketplace o su plugin, desde la sesión (fuente: `.../discover-plugins`):
+```
+/plugin marketplace list              # ver marketplaces configurados
+/plugin marketplace update            # actualizar TODOS
+/plugin marketplace update <nombre>   # actualizar uno (p. ej. claude-plugins-official)
+/plugin update <plugin>               # reinstalar un plugin con su manifiesto más reciente
+```
+🟢 En esta máquina, el marketplace `claude-plugins-official` está declarado en `~/.claude/plugins/known_marketplaces.json` como un **repo de GitHub** (`anthropics/claude-plugins-official`) con un campo `lastUpdated` (`2026-07-14`). "Actualizar" es, literalmente, traer la última versión de ese repo — por eso versionar en Git y actualizar son la misma idea vista desde dos ángulos.
+
+**c) Skills de cuenta / organización (las que subiste a Claude online).**
+🔵 La fuente de verdad **no está en tu disco**, sino en tu **biblioteca de Claude en la web / app de escritorio** (*Ajustes → Personalizar*) o, para las de organización, en el panel de administración. Actualizar = **volver a subir** la nueva versión ahí (las de organización las re-sube un admin y se provisionan a todos).
+⚪ **Hueco honesto:** la documentación oficial **no especifica** el mecanismo ni el *tiempo* exacto de propagación a las sesiones, ni ofrece historial de versiones o rollback documentado. En la práctica, una **sesión nueva** toma el conjunto de skills habilitado en ese momento — así que, tras re-subir, lo fiable es **abrir una sesión nueva** para confirmar que corres la última versión. No especulamos más allá de eso: es un punto a verificar con Anthropic.
+
+> [!tip] Principio que unifica los tres casos
+> 🟡 Una skill "es solo archivos". Para lo que controlas en disco (personal, proyecto, plugin), **mantenerla al día = control de versiones**: edita el `SKILL.md`, versiónalo en Git, haz pull. Para lo que vive en el servidor (cuenta/org), la **biblioteca online es la autoridad**: re-subes ahí y una sesión nueva la recoge. La trampa a evitar es tener *dos copias divergentes* de la misma skill —una local y una en tu cuenta— sin saber cuál gana; por eso conviene decidir, por skill, cuál es su único origen de verdad.
+
+🔎 **Cómo saber qué tienes cargado ahora mismo.** 🔵 En una sesión puedes listar las skills activas con `/skills` (y `/help` muestra además comandos y prompts de servidores MCP). 🟢 En esta sesión de app, ese inventario mezcla las de Anthropic de fábrica (`docx`, `pdf`, `xlsx`…) con tu `estandarizacion-construccion-sql` de cuenta — juntas, porque para mí todas son "skills disponibles" sin importar su origen.
+
+> [!note] Práctica sugerida (en tu sesión de CLI)
+> Según el protocolo de dos sesiones, pruébalo tú en tu terminal: abre `claude`, ejecuta `/skills` para ver el inventario y `/plugin marketplace update` para traer lo último del marketplace. Contrasta la lista de `/skills` de la CLI con la que ves en el app: si `estandarizacion-construccion-sql` aparece en el app pero **no** en la CLI, acabas de comprobar de primera mano la frontera app↔cuenta de §7.7.1.
+
+## 7.8 ¿Herramienta nativa, MCP, subagente o skill?
 
 Con el mapa completo, la decisión práctica (🟡 guía simplificada, completando la tabla del Capítulo 6 §6.2):
 
@@ -213,7 +284,7 @@ Con el mapa completo, la decisión práctica (🟡 guía simplificada, completan
 
 La pregunta operativa que lo resume: *¿le falta una **capacidad** (→ MCP), le sobra **trabajo** (→ subagente), o le falta **procedimiento** (→ skill)?*
 
-## 7.8 El expediente `claude mcp serve`: el método de la guía en acción
+## 7.9 El expediente `claude mcp serve`: el método de la guía en acción
 
 Este apartado existe porque el proceso de investigación de esta guía produjo una **contradicción real**, y resolverla es la mejor demostración de para qué sirven los marcadores del Capítulo 1 §1.6.
 
@@ -226,7 +297,7 @@ Veredicto: ⚪ **no confirmado en la documentación oficial al momento de escrib
 > [!note] La lección meta
 > No es un apartado sobre un comando; es un apartado sobre **cómo saber qué es verdad** en un ecosistema que cambia cada semana. Fuentes de terceros consistentes entre sí pueden estar todas copiándose el mismo dato viejo. La cadena correcta es: afirmación → ¿está en `code.claude.com/docs`? → si no, marcador ⚪ y a otra cosa.
 
-## 7.9 Práctica para ti: tu primer servidor MCP desde la CLI
+## 7.10 Práctica para ti: tu primer servidor MCP desde la CLI
 
 Según nuestro protocolo de dos sesiones, esto lo ejecutas **tú, en tu terminal** (sirve cualquier carpeta; sugiero la del vault). Es reversible y sin riesgo: el servidor es oficial de Microsoft, de solo lectura y sin autenticación — y el endpoint lo confirmamos en vivo en §7.5.
 
@@ -262,11 +333,15 @@ Qué observar mientras lo haces: el prompt de permiso la primera vez que Claude 
 - **Definir el tuyo** = un archivo Markdown único `.claude/agents/<nombre>.md` (proyecto) o `~/.claude/agents/<nombre>.md` (usuario): frontmatter YAML con `name` y `description` obligatorios (+ `tools`/`model` opcionales) y un cuerpo que es su system prompt. En esta sesión creamos `revisor-capitulos` como ejemplo real (§7.6).
 - **No confundir subagentes con llamadas paralelas a herramientas**: cuando Claude lanza varios comandos al mismo tiempo sin esperar entre ellos, lo hace él mismo en su contexto (como abrir 3 terminales a la vez). Un subagente es otro Claude aparte. Regla: resultados pequeños que necesitas aquí → paralelo; exploración masiva o trabajo en segundo plano → subagente.
 - **Auditoría forense de seis invocaciones reales** (§7.6): el modelo del subagente no hereda el del orquestador (queda fijo por frontmatter), el harness añade metadata propia (`agentId`/`usage`) separada de la respuesta del agente, y el paso "lee `CLAUDE.md`" del `.md` nunca se ejecutó como `Read` real — el cumplimiento vino del prompt que armó el orquestador, no de una relectura del archivo.
+- Las **skills** (§7.7) son la tercera vía de extensión: una **receta** repetible (`SKILL.md` = frontmatter `name`+`description` obligatorios + cuerpo Markdown). El subagente es *quién*; la skill es *el instructivo* que el mismo Claude sigue sin abrir otra ventana de contexto.
+- **Skills, cuatro orígenes**: personal (`~/.claude/skills/`), proyecto (`.claude/skills/`, vía Git), plugin/marketplace, y **cuenta/organización** (servidor de Anthropic, subidas en claude.ai). Las de cuenta **no viven en tu disco**: llegan al app/nube desde el servidor — probado en vivo, `estandarizacion-construccion-sql` aparece en la lista pero no existe en `~/.claude`. **Una CLI pura no ve las de cuenta**; solo los archivos locales.
+- **Acceso a skills = descubrimiento (nombre+descripción, siempre) vs carga (contenido, solo al invocar con `Skill` o `/nombre`)** — el mismo *progressive disclosure* del tool search MCP.
+- **Mantenerlas actualizadas** depende del origen: en disco → editar el `SKILL.md` (se recoge en caliente) y versionar en Git; plugin → `/plugin marketplace update` y `/plugin update`; cuenta/org → re-subir en la biblioteca web y abrir sesión nueva (⚪ el mecanismo exacto de propagación no está documentado). `/skills` lista lo activo en la sesión.
 - `claude mcp serve` es el caso de estudio epistemológico de la guía: reportado por terceros, ausente de la documentación oficial → ⚪.
 
 ## Analogía
 
-Piensa en un taller mecánico. Las herramientas nativas de Claude son las de **su propio cinturón**: siempre las lleva puestas. MCP es la **regleta de enchufes normalizados** de la pared del taller: como la norma del enchufe es pública, cualquier fabricante — incluso la competencia — puede construir una estación especializada (el elevador de Microsoft, el compresor de GitHub) y enchufarla; el mecánico la usa al instante, sin adaptadores. El catálogo de estaciones disponibles es el registro de conectores. Y los scopes son dónde guardas cada aparato: tu **cajón personal en este taller** (local), el **tablero compartido del taller que todo el equipo ve en el inventario** (project, `.mcp.json` en Git), o tu **maletín que llevas a todos los talleres** (user). Un subagente, en cambio, no es un aparato: es **otro mecánico con su propia mesa**, al que le pasas la orden de trabajo y te devuelve el coche listo — sin que tengas que ver cada tuerca que tocó.
+Piensa en un taller mecánico. Las herramientas nativas de Claude son las de **su propio cinturón**: siempre las lleva puestas. MCP es la **regleta de enchufes normalizados** de la pared del taller: como la norma del enchufe es pública, cualquier fabricante — incluso la competencia — puede construir una estación especializada (el elevador de Microsoft, el compresor de GitHub) y enchufarla; el mecánico la usa al instante, sin adaptadores. El catálogo de estaciones disponibles es el registro de conectores. Y los scopes son dónde guardas cada aparato: tu **cajón personal en este taller** (local), el **tablero compartido del taller que todo el equipo ve en el inventario** (project, `.mcp.json` en Git), o tu **maletín que llevas a todos los talleres** (user). Un subagente, en cambio, no es un aparato: es **otro mecánico con su propia mesa**, al que le pasas la orden de trabajo y te devuelve el coche listo — sin que tengas que ver cada tuerca que tocó. Y una **skill** es la **ficha de procedimiento plastificada** colgada junto a la estación: "cómo hacer la revisión de 20 puntos", "cómo escribir un commit según nuestra norma". El mecánico la descuelga y la sigue paso a paso cuando el trabajo la pide. Algunas fichas son **tuyas, escritas a mano y guardadas en el cajón** (skills en disco); otras vienen en el **manual del fabricante** (plugin/marketplace); y otras están en el **tablón central de tu empresa** que la administración actualiza para todos los talleres a la vez (skills de cuenta/organización) — ese tablón es online, no está en tu cajón, y por eso tu maletín personal en un taller sin conexión a la red de la empresa (la CLI) no lo ve.
 
 ## Autoevaluación
 
@@ -279,6 +354,8 @@ Piensa en un taller mecánico. Las herramientas nativas de Claude son las de **s
 7. *(Añadida §7.6)* Claude necesita verificar 5 cosas rápidas sobre la estructura de un directorio para documentarla. ¿Debería lanzar un subagente o usar llamadas paralelas a herramientas? ¿Y si en vez de 5 cosas rápidas fueran 200 archivos que necesita leer completos?
 8. *(Añadida)* ¿Cuáles son los dos únicos campos **obligatorios** del frontmatter de un subagente, y qué ocurre si **omites** el campo `tools`?
 9. *(Añadida §7.6, auditoría forense)* Un subagente tiene `model: sonnet` en su frontmatter. Si el orquestador que lo invoca está corriendo con `claude-opus-4-8`, ¿con qué modelo corre el subagente? Y si el `.md` del subagente ordena "primero lee `CLAUDE.md`" pero el log muestra `readCount:0`, ¿significa eso que el subagente incumplió las reglas del proyecto? ¿Por qué sí o por qué no?
+10. *(Añadida §7.7)* Subiste una skill a tu cuenta de Claude (claude.ai). ¿Está guardada en tu disco? ¿Por qué la ve esta sesión del app pero no la vería una sesión de `claude` en tu terminal? Y explica la diferencia entre que Claude *descubra* una skill y que la *cargue*.
+11. *(Añadida §7.7)* Tienes tres skills que actualizar: una en `.claude/skills/` del repo del equipo, una que vino de un marketplace, y una que subiste a tu cuenta online. ¿Cuál es la vía de actualización de cada una, y cuál de las tres tiene un mecanismo de propagación **no documentado oficialmente**?
 
 > [!success]- Ver posibles respuestas (clic para expandir)
 > 1. Sin estándar, N modelos × M sistemas exigen N×M integraciones a medida; con MCP cada sistema publica un servidor una vez (N+M). Primitivas: tools (funciones que invoca el modelo), resources (datos de solo lectura que mencionas con `@`), prompts (plantillas que ejecutas como `/mcp__servidor__prompt`).
@@ -290,6 +367,8 @@ Piensa en un taller mecánico. Las herramientas nativas de Claude son las de **s
 > 7. Las 5 cosas rápidas → **llamadas paralelas a herramientas**: los resultados son pequeños (~20 líneas), se necesitan en el contexto actual para razonar sobre ellos, y no justifican crear otro Claude. Se agrupan las independientes en lotes (ej. 3+2) para ejecutar en 2 turnos en vez de 5. Los 200 archivos → **subagente**: la lectura completa de 200 archivos desbordaría la ventana de contexto de la sesión principal; el subagente los procesa en su propio espacio y devuelve solo el resumen.
 > 8. Solo `name` y `description`. Si omites `tools`, el subagente **hereda todas** las herramientas del agente padre; restringirlas (p. ej. a `Read, Grep, Glob`) es una decisión de seguridad activa que crea un subagente de solo lectura.
 > 9. Corre con `claude-sonnet-5` — el `model` del frontmatter es una asignación fija del agente, no algo que herede del orquestador (confirmado en el log: el orquestador cambió de modelo a mitad de sesión y el subagente no varió). Y no, no necesariamente incumplió: `readCount:0` solo prueba que no llamó a `Read` sobre ese archivo — si el resultado final respetó las reglas del proyecto es porque el **orquestador las pre-digirió dentro del `prompt`** que armó para invocarlo. La lección es justamente que "documentado" y "ejecutado" pueden diferir sin que el resultado sea incorrecto — pero quien orquesta no puede darlo por hecho sin mirar el log.
+> 10. **No**, no está en tu disco: las skills de cuenta viven en el **servidor de Anthropic** (se comprobó buscándola en `~/.claude` sin encontrarla, pese a ser invocable). El **app de escritorio (Cowork) y las sesiones en la nube** descargan las skills de tu cuenta; una **CLI pura** solo lee archivos locales (`~/.claude/skills/` y `.claude/skills/`), así que no la vería salvo que también existiera como archivo. *Descubrir* = tener su nombre + descripción en la lista (siempre, para decidir cuándo usarla); *cargar* = traer su contenido completo al contexto, y eso solo ocurre al invocarla (`Skill` o `/nombre`). Es *progressive disclosure*, igual que el tool search de MCP.
+> 11. (a) La del repo → editar su `SKILL.md` (se recoge en caliente) y **versionarla en Git**: actualizar es `git pull`. (b) La de marketplace → `/plugin marketplace update <nombre>` (o `/plugin update <plugin>`), que trae la última versión del repo del marketplace. (c) La de tu cuenta → **re-subirla** en la biblioteca web/app y abrir una **sesión nueva** para recogerla. La tercera es la del **mecanismo no documentado**: la doc oficial no especifica cómo ni cuándo se propaga la nueva versión a las sesiones (⚪), ni ofrece rollback documentado.
 
 ---
 [[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Claude Code Capitulo 08 - Comparativas]]
