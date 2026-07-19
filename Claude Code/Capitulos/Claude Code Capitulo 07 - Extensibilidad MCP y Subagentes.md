@@ -235,7 +235,11 @@ find ~/.claude -iname "*estandarizacion*"    # → (nada): tampoco está como pl
 
 > [!important] El matiz que lo cambia todo: app/Cloud sí, CLI no
 > 🔵 Las skills de cuenta/organización **solo bajan a las sesiones del app de escritorio (Cowork) y a las sesiones en la nube**; una sesión **de CLI pura** (`claude` en tu terminal) ve *únicamente* los archivos locales (`~/.claude/skills/` y `.claude/skills/`) — **no** recibe las de tu cuenta (fuente: Centro de ayuda de Claude).
-> 🟢 Lo observado en esta sesión (app): `estandarizacion-construccion-sql` aparece en mi lista pese a no existir en disco. 🔵 De ahí, por lo documentado, se sigue que **no** estaría disponible si abrieras `claude` en una terminal, salvo que además la tuvieras como archivo local — pero eso es inferencia de la doc, aún **no** comprobado en una CLI real (lo propone la práctica de §7.7.2). Es la misma frontera app↔CLI del protocolo de dos sesiones (Cap. 6 §6.6): la sesión cronista (app) ve las skills de tu cuenta; una CLI cruda, no.
+> 🟢 Confirmado de primera mano en **los dos lados** de la frontera, misma carpeta (el vault):
+> - **App (esta sesión):** `estandarizacion-construccion-sql` aparece en mi lista pese a no existir en disco.
+> - **CLI (`claude` en la terminal, v2.1.211):** el comando `/skills` reporta **"No skills found"** y solo señala `.claude/skills/` y `~/.claude/skills/` como orígenes — la skill de cuenta **no aparece** (verificado en la sesión CLI del usuario, 2026-07-18).
+>
+> Es la misma frontera app↔CLI del protocolo de dos sesiones (Cap. 6 §6.6): la sesión cronista (app) ve las skills de tu cuenta; una CLI cruda, no.
 
 **Cómo "accede" Claude, con precisión.** Igual que con los esquemas de herramientas MCP (§7.5, *tool search*), hay **dos niveles** — y esto es *progressive disclosure*:
 1. 🔵 **Descubrimiento** (siempre): el harness me entrega, al arrancar el turno, solo el **nombre + la descripción de una línea** de cada skill habilitada. Todavía **no tengo su contenido**; la descripción es mi único criterio para decidir cuándo activarla (por eso son tan detalladas).
