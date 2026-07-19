@@ -48,12 +48,12 @@ origen: "Capítulo 8 de la guía de Claude Code (§8.10–§8.13)"
 
 ### Antigravity brilla en...
 
-- **Orquestación multi-agente dinámica**: múltiples agentes especializados en paralelo es su propuesta central, potenciada por la capacidad de definir dinámicamente nuevos subagentes (`define_subagent`) adaptados al contexto de la tarea.
-- **Ecosistema Google**: si tu stack es Firebase + Android + Google Cloud, la integración nativa es una ventaja enorme.
-- **Cuatro superficies independientes**: puedes usar solo el CLI, solo el SDK, solo la app — no te fuerza a un paquete monolítico.
-- **Skills como "cheat sheets de contexto"**: el enfoque de comprimir documentación en skills es pragmático y bien pensado.
-- **Generación de UI/imágenes integrada (`generate_image`)**: capacidad nativa para prototipar y diseñar interfaces visuales o assets directamente desde prompts en el chat, facilitando el diseño interactivo con el usuario.
-- **Automatización temporal en background (`schedule`)**: un programador integrado para temporizadores y cron jobs recurrentes que ejecutan código de manera desasociada en background y notifican al agente de forma autónoma.
+- **Orquestación multi-agente dinámica**: múltiples agentes especializados en paralelo es su propuesta central, potenciada por la capacidad de definir dinámicamente nuevos subagentes (`define_subagent`) adaptados al contexto de la tarea (ver [[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Capítulo 7]] §7.1).
+- **Ecosistema Google**: si tu stack es Firebase + Android + Google Cloud, la integración nativa es una ventaja enorme (ver [[Antigravity Capitulo 01 - Fundamentos y Filosofia\|Capítulo 1]] §1.1).
+- **Cuatro superficies independientes**: puedes usar solo el CLI, solo el SDK, solo la app — no te fuerza a un paquete monolítico (ver [[Antigravity Capitulo 06 - Comandos CLI y Superficies\|Capítulo 6]] §6.1).
+- **Skills como "cheat sheets de contexto"**: el enfoque de comprimir documentación en skills es pragmático y bien pensado (ver [[Antigravity Capitulo 03 - Contexto y Memoria\|Capítulo 3]] §3.4 y [[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Capítulo 7]] §7.4).
+- **Generación de UI/imágenes integrada (`generate_image`)**: capacidad nativa para prototipar y diseñar interfaces visuales o assets directamente desde prompts en el chat, facilitando el diseño interactivo con el usuario (ver [[Antigravity Capitulo 01 - Fundamentos y Filosofia\|Capítulo 1]] §1.2 y [[Antigravity Capitulo 06 - Comandos CLI y Superficies\|Capítulo 6]] §6.1).
+- **Automatización temporal en background (`schedule`)**: un programador integrado para temporizadores y cron jobs recurrentes que ejecutan código de manera desasociada en background y notifican al agente de forma autónoma (ver [[Antigravity Capitulo 04 - Planificacion y Flujo de Trabajo\|Capítulo 4]] §4.3).
 
 ### Antigravity flaquea en...
 
@@ -65,17 +65,17 @@ origen: "Capítulo 8 de la guía de Claude Code (§8.10–§8.13)"
 
 | Dimensión | Claude Code | Codex | Antigravity |
 |---|---|---|---|
-| **Filosofía** | Tu terminal, tu control | Sandbox primero | Plataforma de agentes |
-| **Ejecución** | Local | Cloud (+ CLI local) | Local (app/CLI) + remoto (SDK) |
+| **Filosofía** | Tu terminal, tu control | Sandbox primero | 🟢 Plataforma de agentes (ver [[Antigravity Capitulo 01 - Fundamentos y Filosofia#1.1 "Plataforma de agentes, no un agente"\|Cap 1]] §1.1) |
+| **Ejecución** | Local | Cloud (+ CLI local) | 🟢 Local (app/CLI) + remoto (SDK) (ver [[Antigravity Capitulo 02 - Arquitectura Conceptual\|Cap 2]] §2.1) |
 | **Modelo** | Opus 4.8 / Sonnet 5 / Haiku 4.5 | GPT-5.6 (Sol/Terra/Luna) | Gemini (e.g., Gemini 3.5 Flash) |
-| **CLI** | Propietaria | Open source (Rust) | Propietaria |
-| **Permisos** | Granulares, 3 niveles | Sandbox (cloud) + modos (CLI) | Sandbox con permisos dinámicos y granulares (`ask_permission`) |
-| **Memoria** | Auto-memory persistente | ⚪ No documentado | 🟢 Persistente en carpeta de datos local (`~/.gemini/antigravity/`) |
-| **MCP** | ✅ 3 scopes | ✅ Vía plugins | ✅ Local y remoto |
-| **Multi-agente** | Subagentes (mismo modelo) | Tareas paralelas (sandboxes) | Sub-agentes dinámicos (`define_subagent`) |
-| **Skills** | SKILL.md, `/nombre` | SKILL.md, `$nombre`, Record & Replay | SKILL.md, automáticas |
-| **Fuerza** | Control + memoria + CLI | Seguridad + paralelismo cloud | Orquestación multi-agente + UI/Imagen y Background Tasks |
-| **Debilidad** | Seguridad por confianza | Latencia cloud | Madurez + lock-in Google |
+| **CLI** | Propietaria | Open source (Rust) | 🟢 Propietaria (ver [[Antigravity Capitulo 06 - Comandos CLI y Superficies\|Cap 6]] §6.1) |
+| **Permisos** | Granulares, 3 niveles | Sandbox (cloud) + modos (CLI) | 🟢 Sandbox con permisos dinámicos y granulares (`ask_permission`) (ver [[Antigravity Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] §4.2) |
+| **Memoria** | Auto-memory persistente | ⚪ No documentado | 🟢 Persistente en carpeta de datos local (`~/.gemini/antigravity/`) (ver [[Antigravity Capitulo 03 - Contexto y Memoria\|Cap 3]] §3.1) |
+| **MCP** | ✅ 3 scopes | ✅ Vía plugins | 🟢 ✅ Local y remoto (ver [[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.3) |
+| **Multi-agente** | Subagentes (mismo modelo) | Tareas paralelas (sandboxes) | 🟢 Sub-agentes dinámicos (`define_subagent`) (ver [[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.1) |
+| **Skills** | SKILL.md, `/nombre` | SKILL.md, `$nombre`, Record & Replay | 🟢 SKILL.md, automáticas (ver [[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.4) |
+| **Fuerza** | Control + memoria + CLI | Seguridad + paralelismo cloud | 🟢 Orquestación multi-agente + UI/Imagen y Background Tasks (ver [[Antigravity Capitulo 01 - Fundamentos y Filosofia\|Cap 1]] & [[Antigravity Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] §4.3) |
+| **Debilidad** | Seguridad por confianza | Latencia cloud | Madurez + lock-in Google (ver [[Antigravity Capitulo 01 - Fundamentos y Filosofia\|Cap 1]]) |
 
 ## 3. ¿Y los otros? (mención rápida)
 
@@ -106,11 +106,11 @@ La diferencia clave: estos últimos son **clientes que consumen modelos ajenos**
 - Quieres grabar workflows y convertirlos en skills automáticamente.
 
 **Usa Antigravity cuando...**
-- Tu stack es Google (Firebase, Android, Google Cloud) o quieres aprovechar motores Gemini avanzados.
-- Necesitas orquestación multi-agente real (definiendo subagentes dinámicos a demanda).
-- Requieres generar o editar interfaces visuales y assets en caliente (`generate_image`).
-- Quieres programar flujos asíncronos y cron jobs en segundo plano (`schedule`).
-- Prefieres una plataforma de agentes sobre un agente individual con superficies desacopladas.
+- Tu stack es Google (Firebase, Android, Google Cloud) o quieres aprovechar motores Gemini avanzados (ver [[Antigravity Capitulo 01 - Fundamentos y Filosofia\|Capítulo 1]]).
+- Necesitas orquestación multi-agente real (definiendo subagentes dinámicos a demanda) (ver [[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Capítulo 7]] §7.1).
+- Requieres generar o editar interfaces visuales y assets en caliente (`generate_image`) (ver [[Antigravity Capitulo 01 - Fundamentos y Filosofia\|Capítulo 1]] §1.2 y [[Antigravity Capitulo 06 - Comandos CLI y Superficies\|Capítulo 6]] §6.1).
+- Quieres programar flujos asíncronos y cron jobs en segundo plano (`schedule`) (ver [[Antigravity Capitulo 04 - Planificacion y Flujo de Trabajo\|Capítulo 4]] §4.3).
+- Prefieres una plataforma de agentes sobre un agente individual con superficies desacopladas (ver [[Antigravity Capitulo 01 - Fundamentos y Filosofia\|Capítulo 1]] §1.1 y [[Antigravity Capitulo 06 - Comandos CLI y Superficies\|Capítulo 6]] §6.1).
 
 **La verdad incómoda**: en la práctica, muchos equipos usan **más de uno**. Un agente para tareas rápidas locales (Claude Code o Codex CLI), otro para tareas largas en paralelo (Codex cloud), y skills/integraciones del ecosistema que ya usan (Antigravity si son Google, Codex si son OpenAI). La pregunta no es "cuál es el mejor" sino "cuál encaja mejor en este momento, para esta tarea".
 
