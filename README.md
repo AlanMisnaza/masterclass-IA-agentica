@@ -3,7 +3,7 @@
 ![Estado](https://img.shields.io/badge/estado-en%20construcci%C3%B3n%20viva-brightgreen)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-9%2F10%20cap%C3%ADtulos-blueviolet)
 ![Antigravity](https://img.shields.io/badge/Antigravity-9%2F10%20cap%C3%ADtulos-blue)
-![Codex](https://img.shields.io/badge/Codex-futuro-lightgrey)
+![Codex](https://img.shields.io/badge/Codex-exploraci%C3%B3n%200%2F10-informational)
 ![Formato](https://img.shields.io/badge/formato-vault%20de%20Obsidian-7C3AED)
 
 > **Una masterclass que se escribe a sí misma.** Cada herramienta de IA agéntica (Claude Code, Antigravity, y las que vengan) documenta **su propia guía de 10 capítulos** trabajando en sesiones reales sobre este mismo vault — y una capa transversal de comparativas responde la pregunta práctica: *¿cuál uso para esta tarea?*
@@ -20,7 +20,7 @@ flowchart TB
     subgraph GUIAS["Guías espejo — 10 capítulos cada una"]
         CC["🟣 Claude Code<br/><i>escrita por Claude Code</i>"]
         AG["🔵 Antigravity<br/><i>escrita por Antigravity</i>"]
-        CX["⚪ Codex<br/><i>futuro</i>"]
+    CX["🧭 Codex<br/><i>exploración guiada por evidencia</i>"]
     end
     subgraph HUB["⚖️ Comparativas (hub transversal)"]
         MD["Matriz de Decisión<br/>¿cuál para qué tarea?"]
@@ -39,6 +39,7 @@ flowchart TB
 | Si quieres... | Abre... |
 |---|---|
 | La vista completa del proyecto | [Masterclass IA Agentica - Mapa de Contenidos](Masterclass%20IA%20Agentica%20-%20Mapa%20de%20Contenidos.md) |
+| Empezar a documentar Codex mediante evidencia real | [Codex - Mapa de Contenidos](Codex/Codex%20-%20Mapa%20de%20Contenidos.md) |
 | Aprender **Claude Code** desde cero | [Claude Code - Mapa de Contenidos](Claude%20Code/Claude%20Code%20-%20Mapa%20de%20Contenidos.md) |
 | Aprender **Antigravity** desde cero | [Antigravity - Mapa de Contenidos](Antigravity/Antigravity%20-%20Mapa%20de%20Contenidos.md) |
 | Decidir **cuál herramienta usar** | [Matriz de Decisión](Comparativas/Matriz%20de%20Decision.md) |
@@ -102,7 +103,7 @@ Cada agente escribe **solo en su territorio** — y nadie borra contenido de otr
 |---|---|---|
 | **Claude Code** (cronista) | `Claude Code/`, `Recursos/`, `Comparativas/` (estructura + su columna), mapa raíz | Columnas ajenas; `Antigravity/` |
 | **Antigravity** | `Antigravity/`, su columna y notas firmadas en `Comparativas/` | Todo lo demás |
-| **Codex** (futuro) | `Codex/`, su columna y notas firmadas | Todo lo demás |
+| **Codex** (exploración) | `Codex/`, su columna y notas firmadas | Todo lo demás |
 | **Usuario** | Todo | — (arbitra conflictos) |
 
 En las tablas comparativas, cada herramienta edita **solo su columna**; los aportes fuera de tabla van en callouts firmados (`> [!note] Nota de Antigravity 🟢`).

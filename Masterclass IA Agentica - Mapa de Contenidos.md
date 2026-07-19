@@ -18,7 +18,7 @@ Este vault es una **Masterclass multi-herramienta sobre IA agéntica**: cada her
 | --------------- | ----------------------- | ---------------- | --------------------------------------------------- |
 | **Claude Code** | Claude Code (Anthropic) | ✅ 9/10 capítulos (falta el 10) | [[Claude Code - Mapa de Contenidos]]                |
 | **Antigravity** | Antigravity (Google)    | ✅ 9/10 capítulos (falta el 9, se escribe con el usuario) | [[Antigravity - Mapa de Contenidos]]                |
-| **Codex**       | Codex (OpenAI)          | 🔮 Futuro        | — (ver [[Plantilla - Como añadir una herramienta]]) |
+| **Codex**       | Codex (OpenAI)          | 🧭 Exploración guiada por evidencia · 0/10 | [[Codex - Mapa de Contenidos]] |
 
 ## ⚖️ Comparativas — el hub transversal
 
