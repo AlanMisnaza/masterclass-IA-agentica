@@ -36,7 +36,7 @@ Las filosofías de diseño de cada herramienta se desarrollan en el capítulo 1 
 | **Acceso a internet** | Sí (tu red) | Sí (sandbox con red) | Sí (tu red) | 🟢 Sí ([[Antigravity Capitulo 02 - Arquitectura Conceptual\|Cap 2]] §2.4) |
 | **Ejecuta tests** | Tus tests reales | Tests en sandbox | Tus tests reales | 🟢 Tus tests reales ([[Antigravity Capitulo 02 - Arquitectura Conceptual\|Cap 2]]) |
 | **Resultado** | Cambios en tus archivos | PR o diff para review | Cambios en tus archivos | 🟢 Changes en tus archivos ([[Antigravity Capitulo 02 - Arquitectura Conceptual\|Cap 2]]) |
-| **Paralelismo** | Subagentes ([[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes|Cap 7]] §7.6) | Múltiples sandboxes | Similar a Claude Code | 🟢 Sub-agentes especializados y paralelos ([[Antigravity Capitulo 02 - Arquitectura Conceptual\|Cap 2]] §2.3, [[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.1) |
+| **Paralelismo** | Subagentes ([[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.6) | Múltiples sandboxes | Similar a Claude Code | 🟢 Sub-agentes especializados y paralelos ([[Antigravity Capitulo 02 - Arquitectura Conceptual\|Cap 2]] §2.3, [[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.1) |
 
 🟡 **Analogía**: Claude Code es como un mecánico que trabaja directamente en tu coche; Codex cloud es como un taller que recibe una copia de tu coche, trabaja en ella y te devuelve las piezas reparadas para que tú las instales; Antigravity es como un equipo de mecánicos especializados, cada uno en su estación, trabajando en paralelo.
 
@@ -46,8 +46,8 @@ Las filosofías de diseño de cada herramienta se desarrollan en el capítulo 1 
 |---|---|---|---|
 | **Instrucciones de proyecto** | `CLAUDE.md` (raíz, subcarpetas, usuario) | `AGENTS.md` + `SKILL.md` | 🟢 Skills en `.agents/skills/` o `~/.gemini/config/skills/` ([[Antigravity Capitulo 03 - Contexto y Memoria\|Cap 3]] §3.4) |
 | **Memoria entre sesiones** | Auto-memory (archivos .md con frontmatter) | ⚪ No documentado públicamente | 🟢 Persistente en carpeta de datos (`~/.gemini/antigravity/brain/`) con logs y estados estructurados ([[Antigravity Capitulo 03 - Contexto y Memoria\|Cap 3]] §3.1) |
-| **Carga de contexto** | Diferida (tool search, [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes|Cap 7]] §7.4) | Diferida ("at most 2% of context window for skills list") | 🟢 Diferida ("loaded only when request matches description") ([[Antigravity Capitulo 03 - Contexto y Memoria\|Cap 3]] §3.4) |
-| **Compactación** | Automática con resumen ([[Claude Code Capitulo 03 - Contexto y Memoria|Cap 3]] §3.6) | ⚪ No documentado | 🟢 Resúmenes de checkpoints y logs consolidados de subagentes ([[Antigravity Capitulo 03 - Contexto y Memoria\|Cap 3]] §3.3) |
+| **Carga de contexto** | Diferida (tool search, [[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.4) | Diferida ("at most 2% of context window for skills list") | 🟢 Diferida ("loaded only when request matches description") ([[Antigravity Capitulo 03 - Contexto y Memoria\|Cap 3]] §3.4) |
+| **Compactación** | Automática con resumen ([[Claude Code Capitulo 03 - Contexto y Memoria\|Cap 3]] §3.6) | ⚪ No documentado | 🟢 Resúmenes de checkpoints y logs consolidados de subagentes ([[Antigravity Capitulo 03 - Contexto y Memoria\|Cap 3]] §3.3) |
 | **Skills/recetas** | Skills invocables (`/nombre` o automáticas) | Skills con `SKILL.md` + scripts opcionales + `openai.yaml` | 🟢 Skills con `SKILL.md` + scripts + assets ([[Antigravity Capitulo 03 - Contexto y Memoria\|Cap 3]] §3.4) |
 
 🟢 **Dato interesante**: los tres usan un archivo llamado `SKILL.md` con estructura similar (frontmatter YAML + instrucciones markdown). Codex lo documenta explícitamente como parte de un "open agent skills standard" — hay convergencia en el formato, aunque cada plataforma tenga sus extensiones propias.
@@ -63,7 +63,7 @@ Cada plataforma resuelve el problema de "¿cuánto control le doy al agente?" de
 | **Enfoque** | Permisos granulares por herramienta | Aislamiento por sandbox | 🟢 Sandbox con permisos dinámicos y granulares ([[Antigravity Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] §4.2) |
 | **Modos** | Default / AcceptEdits / Plan (Shift+Tab) | Sandbox automático (cloud); modos locales en CLI | 🟢 Interactivo con control en tiempo real y flujo reactivo asíncrono ([[Antigravity Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] §4.1 y §4.3) |
 | **Quién aprueba** | Tú, en tiempo real (ask/allow/deny) | Revisión post-ejecución (cloud); tiempo real (CLI) | 🟢 El usuario en tiempo real vía solicitudes explícitas (`ask_permission`) ([[Antigravity Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] §4.2) |
-| **Reglas persistentes** | `settings.json` en 3 niveles ([[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo|Cap 4]]) | `config.toml` | 🟢 Configuración de sesión y permisos persistentes ([[Antigravity Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] §4.2) |
+| **Reglas persistentes** | `settings.json` en 3 niveles ([[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]]) | `config.toml` | 🟢 Configuración de sesión y permisos persistentes ([[Antigravity Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] §4.2) |
 | **Herramientas MCP** | Permisos por herramienta individual | Control por plugins | 🟢 Control por servidor MCP y herramientas autorizadas ([[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.3) |
 
 🔵 Claude Code documenta tres niveles de settings (usuario, proyecto, local) con precedencia clara — cubierto en detalle en el [[Claude Code Capitulo 04 - Planificacion y Flujo de Trabajo|Capítulo 4]] de su guía.
@@ -74,7 +74,7 @@ Síntesis de la cronista a partir del capítulo 5 de cada guía — los 🟢 de 
 
 | Aspecto | Claude Code | Codex | Antigravity |
 |---|---|---|---|
-| **Protocolo con el humano** | 🟢 Nunca comitea sin pedido explícito; prohibido force push / amend sobre lo publicado ([[Claude Code Capitulo 05 - Git y Control de Versiones|Cap 5]] §5.2) | Devuelve diff/PR para revisión post-ejecución | 🟢 Sugiere rama para encapsular el experimento; acciones críticas pasan por `ask_permission` (su [[Antigravity Capitulo 05 - Git y Control de Versiones\|Cap 5]] §5.1) |
+| **Protocolo con el humano** | 🟢 Nunca comitea sin pedido explícito; prohibido force push / amend sobre lo publicado ([[Claude Code Capitulo 05 - Git y Control de Versiones\|Cap 5]] §5.2) | Devuelve diff/PR para revisión post-ejecución | 🟢 Sugiere rama para encapsular el experimento; acciones críticas pasan por `ask_permission` (su [[Antigravity Capitulo 05 - Git y Control de Versiones\|Cap 5]] §5.1) |
 | **Criterio de autonomía** | 🟢 Operaciones reversibles (fetch, checkout, pull `--ff-only`, rama nueva) sin preguntar; las que construyen historia, solo con pedido explícito | Aislamiento por sandbox: el repo real nunca se toca directamente | 🟢 Sandbox dinámico: la frontera la marca el permiso en tiempo real ([[Antigravity Capitulo 04 - Planificacion y Flujo de Trabajo\|Cap 4]] §4.2, [[Antigravity Capitulo 05 - Git y Control de Versiones\|Cap 5]] §5.1) |
 | **Git como infraestructura multi-agente** | 🟢 Worktrees por subagente (`isolation: worktree` en la herramienta `Agent`) | Sandbox por tarea (aislamiento por copia) | 🟢 Modos `Workspace: inherit / branch / share` en `invoke_subagent` ([[Antigravity Capitulo 05 - Git y Control de Versiones\|Cap 5]] §5.2) |
 | **Riesgo que mitiga** | Reescribir historia pública o comitear sin control humano | Dañar el sistema real del usuario | 🟢 Condiciones de carrera entre subagentes paralelos ([[Antigravity Capitulo 05 - Git y Control de Versiones\|Cap 5]] §5.3) |
@@ -128,7 +128,7 @@ Síntesis de la cronista a partir del capítulo 5 de cada guía — los 🟢 de 
 
 | Aspecto | Claude Code | Codex | Antigravity |
 |---|---|---|---|
-| **Multi-agente** | Subagentes con contexto aislado ([[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes|Cap 7]] §7.6) | Múltiples tareas en sandboxes paralelos | 🟢 Sub-agentes especializados por rol (DevOps, QA) ([[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.1) |
+| **Multi-agente** | Subagentes con contexto aislado ([[Claude Code Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.6) | Múltiples tareas en sandboxes paralelos | 🟢 Sub-agentes especializados por rol (DevOps, QA) ([[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.1) |
 | **Anidamiento** | Hasta 5 niveles | ⚪ No documentado | 🟢 Soportado (vía `enable_subagent_tools: true`) ([[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.2) |
 | **Tipos de agente** | `Explore`, `Plan`, `general-purpose`, custom | ⚪ No documentado públicamente | 🟢 Definición dinámica (`define_subagent`) o por roles ([[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.1) |
 | **Orquestación** | Herramienta `Agent` invocada por Claude | Paralelismo de tareas (UI) | 🟢 Prompt → múltiples agentes simultáneos ([[Antigravity Capitulo 07 - Extensibilidad MCP y Subagentes\|Cap 7]] §7.1 y §7.2) |
