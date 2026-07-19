@@ -58,6 +58,16 @@ Cada guía de herramienta sigue el mismo esqueleto de 10 temas: 1 Fundamentos y 
 5. Al cerrar un capítulo: actualizar su estado a ✅ en el MOC de su guía y marcar la tarea correspondiente como completada en la lista de tareas de la sesión.
 6. Los recursos transversales (`Recursos/Glosario.md`, `Mapa Mental.md`, `Plan de Estudio 7 Dias.md`, `Documentos Oficiales.md`) se completan al final, cuando ya existan los 10 capítulos de la guía de Claude Code.
 
+## Convención de commits
+
+Los mensajes de commit se redactan con la **skill `git-commit-es`** (Conventional Commits en español) — no improvises el formato. Al commitear:
+- **Invoca la skill `git-commit-es`** para redactar el mensaje.
+- **Sin footer `Co-Authored-By`** (salvo que el usuario lo pida).
+- Commits **atómicos** y respetando los territorios de escritura: cada sesión commitea solo los archivos de su territorio; nunca arrastres cambios ajenos (de otra herramienta o sesión) al mismo commit.
+- Tipos habituales: `docs` (capítulos y recursos), `refactor`/`chore` (estructura y config), `feat`/`fix` cuando aplique.
+
+> Nota: no existe un agente/subagente dedicado a commits en este vault, y es deliberado. La skill basta y produce mejores mensajes que un subagente aislado, porque el POR QUÉ de un commit vive en la conversación de la sesión (no en el diff), y un subagente arranca sin ese contexto. Un subagente solo se justifica cuando el trabajo es grande, contamina el contexto, o necesita una compuerta de validación propia (no es el caso aquí).
+
 ## Protocolo de dos sesiones (acordado 2026-07-06)
 
 El usuario trabaja con **dos sesiones en paralelo, cada una sobre una carpeta distinta**:
