@@ -7,6 +7,7 @@ tags:
   - herramientas
   - subagentes
   - skills
+  - hooks
 estado: completo
 capitulo: 7
 creado: 2026-07-04
@@ -60,7 +61,7 @@ Dos capacidades adicionales documentadas que completan el cuadro:
 | **stdio** | Un proceso local en tu máquina (ej. `npx servidor`) | Herramientas con acceso directo a tu sistema; scripts propios |
 | **WebSocket** | Conexión bidireccional persistente | Servidores que empujan eventos; no soporta OAuth ni el flag `--transport` (se configura por JSON) |
 
-Los comandos esenciales (todos documentados; los probarás en §7.10):
+Los comandos esenciales (todos documentados; los probarás en §7.11):
 
 ```bash
 claude mcp add --transport http <nombre> <url>     # remoto HTTP
@@ -111,7 +112,7 @@ Cuatro observaciones de primera mano que confirman la teoría:
 
 3. **Llamada real #1 — resultado vacío también es dato**: busqué `"obsidian"` en el registro de conectores de Anthropic y la respuesta fue `{"results":[]}` — JSON estructurado, como toda respuesta MCP. Hallazgo real: a hoy, no hay conector oficial de Obsidian en el registro (este vault se edita con herramientas nativas de archivo, y por eso funciona igual de bien: las notas son Markdown plano).
 
-4. **Llamada real #2 — un servidor describiéndose a sí mismo**: le pregunté al servidor MCP de Microsoft Learn por su propia documentación de conexión. Respondió con las páginas oficiales que confirman su endpoint (`https://learn.microsoft.com/api/mcp`), su transporte (HTTP streamable) y que no requiere autenticación. Ese dato alimenta directamente tu práctica de §7.10.
+4. **Llamada real #2 — un servidor describiéndose a sí mismo**: le pregunté al servidor MCP de Microsoft Learn por su propia documentación de conexión. Respondió con las páginas oficiales que confirman su endpoint (`https://learn.microsoft.com/api/mcp`), su transporte (HTTP streamable) y que no requiere autenticación. Ese dato alimenta directamente tu práctica de §7.11.
 
 ## 7.6 Subagentes: delegar en vez de enchufar
 
@@ -284,7 +285,45 @@ Con el mapa completo, la decisión práctica (🟡 guía simplificada, completan
 
 La pregunta operativa que lo resume: *¿le falta una **capacidad** (→ MCP), le sobra **trabajo** (→ subagente), o le falta **procedimiento** (→ skill)?*
 
-## 7.9 El expediente `claude mcp serve`: el método de la guía en acción
+## 7.9 Cómo se invoca —y cómo garantizar— una skill o un agente
+
+Pregunta que surgió en vivo en esta sesión: *"¿por qué a veces no se llama a un agente o una skill, y cómo hago que se use siempre?"* La respuesta corta es que **no hay magia**: 🔵 una skill o un subagente se activa solo si algo lo **dispara**, y hay tres disparadores — de más **duro** (determinista, lo ejecuta el harness) a más **blando** (a criterio del modelo).
+
+### Los tres disparadores, de duro a blando
+
+**1. Hook — determinista, lo ejecuta el harness (lo más duro).**
+🔵 Un *hook* es un comando que Claude Code ejecuta **automáticamente** en un punto del ciclo de vida de la sesión, configurado en `settings.json` (`~/.claude/settings.json` global · `.claude/settings.json` de proyecto · `.claude/settings.local.json` privado). Su valor es el **determinismo**: lo corre el harness **siempre** que se cumpla la condición, sin depender de mi juicio (fuente: `code.claude.com/docs/en/hooks`). Se engancha a eventos como `PreToolUse` (antes de una herramienta), `PostToolUse`, `UserPromptSubmit` o `SessionStart`, y filtra por un `matcher` (p. ej. el nombre de la herramienta).
+
+Aquí el matiz **crucial** y honesto: 🔵 **un hook NO puede invocar una skill ni un subagente.** La documentación lo dice explícito — los hooks se comunican solo por stdout/stderr y códigos de salida, y *"no pueden disparar comandos `/` ni llamadas a herramientas"*. Lo que un hook **sí** puede hacer son dos cosas:
+- **Bloquear** una acción de forma determinista: un `PreToolUse` que termina con código de salida `2`, o que devuelve JSON con `permissionDecision: "deny"` y un `permissionDecisionReason`, cancela la llamada a la herramienta.
+- **Inyectar texto** que yo leo como contexto (`additionalContext`), por ejemplo en `UserPromptSubmit` o `SessionStart`.
+
+Entonces, ¿cómo se usa un hook para "forzar" que los commits pasen por la skill? 🟡 Aplicando las piezas documentadas de arriba a este caso, el patrón sería un `PreToolUse` que **matchea** `Bash` con un `git commit` y lo **deniega** con un motivo tipo *"usa la skill git-commit-es"*. El hook **garantiza que el atajo crudo se bloquea**; que yo luego elija la skill sigue siendo decisión mía. 🟡 Es decir: el hook da determinismo **en el bloqueo y en el empujón, no en la invocación de la skill**. Ni el escalón más duro garantiza al 100% el *uso* de la herramienta correcta — garantiza que no puedas saltártela por la puerta de atrás.
+
+**2. Instrucción en `CLAUDE.md` — la leo, normalmente la sigo (intermedio).**
+🔵 `CLAUDE.md` se carga en cada sesión de Claude Code; una instrucción como *"para commitear, usa la skill git-commit-es"* la **leo y por defecto la cumplo** — pero es una guía, no un candado: depende de mi juicio (fuente: `code.claude.com/docs/en/memory`). 🟢 Es exactamente lo que hicimos hace un momento en esta sesión: añadimos la convención de commits a `CLAUDE.md` para que toda sesión futura la conozca al arrancar.
+
+**3. Coincidencia de `description` — a criterio del modelo (lo más blando).**
+🔵 Sin hook ni instrucción, una skill o un subagente se ofrece por su campo **`description`**: si la tarea encaja con ella, la activo; si no, no. 🟡 Por eso *"a veces no se llaman"*: si la `description` no coincide con lo que se pide, o no lo juzgo pertinente, simplemente no se invoca — no es un fallo, es el mecanismo. (Es el mismo *progressive disclosure* de §7.7.1: primero veo la ficha, luego decido cargar el contenido.)
+
+### El caso real de esta sesión 🟢
+
+Ejemplo vivo de por qué el escalón blando a veces basta: cuando me pediste crear un commit, **usé la skill `git-commit-es` en mi contexto, no el subagente `commit-es`** — y fue lo correcto. La `description` de la skill coincide con "crear commit", y como el *porqué* del commit vivía en nuestra conversación (no en el diff), tenerlo en mi contexto produjo un mejor mensaje que aislarlo en un subagente. Ningún disparador más duro hacía falta. (Ese subagente `commit-es`, además, resultó ser una copia sin adaptar de otro repo y lo eliminamos en esta misma sesión.)
+
+### La escalera de garantía: cómo acercarse a "siempre"
+
+🟡 Ningún mecanismo **por sí solo** garantiza que se use una skill concreta. Para acercarte, se **combinan** de duro a blando:
+
+| Escalón | Mecanismo | Qué garantiza |
+|---|---|---|
+| Más duro | **Hook** `PreToolUse` que bloquea el atajo crudo | Que no puedas saltarte la vía correcta (determinista) |
+| ↓ | **Permisos** (Cap. 4) que solo permiten las herramientas de la skill | Cierra vías alternas |
+| ↓ | **`CLAUDE.md`** que instruye usar la skill | Que yo lo lea y por defecto lo cumpla |
+| Más blando | **`description`** afinada | Que el disparo natural ocurra sin fricción |
+
+El principio de fondo: 🟡 **el determinismo vive en el harness (hooks, permisos); el juicio vive en el modelo (`description`, `CLAUDE.md`).** Cuanto más arriba en la escalera, menos depende de mi criterio — pero incluso arriba del todo, "bloquear el atajo" y "usar la herramienta correcta" son cosas distintas, y por eso la garantía total exige combinar escalones, no elegir uno.
+
+## 7.10 El expediente `claude mcp serve`: el método de la guía en acción
 
 Este apartado existe porque el proceso de investigación de esta guía produjo una **contradicción real**, y resolverla es la mejor demostración de para qué sirven los marcadores del Capítulo 1 §1.6.
 
@@ -297,7 +336,7 @@ Veredicto: ⚪ **no confirmado en la documentación oficial al momento de escrib
 > [!note] La lección meta
 > No es un apartado sobre un comando; es un apartado sobre **cómo saber qué es verdad** en un ecosistema que cambia cada semana. Fuentes de terceros consistentes entre sí pueden estar todas copiándose el mismo dato viejo. La cadena correcta es: afirmación → ¿está en `code.claude.com/docs`? → si no, marcador ⚪ y a otra cosa.
 
-## 7.10 Práctica para ti: tu primer servidor MCP desde la CLI
+## 7.11 Práctica para ti: tu primer servidor MCP desde la CLI
 
 Según nuestro protocolo de dos sesiones, esto lo ejecutas **tú, en tu terminal** (sirve cualquier carpeta; sugiero la del vault). Es reversible y sin riesgo: el servidor es oficial de Microsoft, de solo lectura y sin autenticación — y el endpoint lo confirmamos en vivo en §7.5.
 
@@ -337,6 +376,8 @@ Qué observar mientras lo haces: el prompt de permiso la primera vez que Claude 
 - **Skills, cuatro orígenes**: personal (`~/.claude/skills/`), proyecto (`.claude/skills/`, vía Git), plugin/marketplace, y **cuenta/organización** (servidor de Anthropic, subidas en claude.ai). Las de cuenta **no viven en tu disco**: llegan al app/nube desde el servidor — probado en vivo, `estandarizacion-construccion-sql` aparece en la lista pero no existe en `~/.claude`. **Una CLI pura no ve las de cuenta**; solo los archivos locales.
 - **Acceso a skills = descubrimiento (nombre+descripción, siempre) vs carga (contenido, solo al invocar con `Skill` o `/nombre`)** — el mismo *progressive disclosure* del tool search MCP.
 - **Mantenerlas actualizadas** depende del origen: en disco → editar el `SKILL.md` (se recoge en caliente) y versionar en Git; plugin → `/plugin marketplace update` y `/plugin update`; cuenta/org → re-subir en la biblioteca web y abrir sesión nueva (⚪ el mecanismo exacto de propagación no está documentado). `/skills` lista lo activo en la sesión.
+- **Cómo se invoca una skill/agente** (§7.9): tres disparadores de duro a blando — **hook** (determinista, lo ejecuta el harness), **instrucción en `CLAUDE.md`** (la leo y por defecto la cumplo), **coincidencia de `description`** (a mi criterio). Por eso "a veces no se llaman": si nada los dispara, no se invocan.
+- **El matiz del hook**: 🔵 un hook **no puede invocar una skill ni un subagente**; solo puede **bloquear** una acción (código de salida `2` o `permissionDecision: "deny"`) e **inyectar texto** que leo. Para "forzar" la skill de commits se bloquea el `git commit` crudo con un `PreToolUse` y se me empuja a la skill — determinismo en el bloqueo, no en la invocación. La garantía total exige **combinar** escalones (hook + permisos + CLAUDE.md + description).
 - `claude mcp serve` es el caso de estudio epistemológico de la guía: reportado por terceros, ausente de la documentación oficial → ⚪.
 
 ## Analogía
@@ -356,6 +397,7 @@ Piensa en un taller mecánico. Las herramientas nativas de Claude son las de **s
 9. *(Añadida §7.6, auditoría forense)* Un subagente tiene `model: sonnet` en su frontmatter. Si el orquestador que lo invoca está corriendo con `claude-opus-4-8`, ¿con qué modelo corre el subagente? Y si el `.md` del subagente ordena "primero lee `CLAUDE.md`" pero el log muestra `readCount:0`, ¿significa eso que el subagente incumplió las reglas del proyecto? ¿Por qué sí o por qué no?
 10. *(Añadida §7.7)* Subiste una skill a tu cuenta de Claude (claude.ai). ¿Está guardada en tu disco? ¿Por qué la ve esta sesión del app pero no la vería una sesión de `claude` en tu terminal? Y explica la diferencia entre que Claude *descubra* una skill y que la *cargue*.
 11. *(Añadida §7.7)* Tienes tres skills que actualizar: una en `.claude/skills/` del repo del equipo, una que vino de un marketplace, y una que subiste a tu cuenta online. ¿Cuál es la vía de actualización de cada una, y cuál de las tres tiene un mecanismo de propagación **no documentado oficialmente**?
+12. *(Añadida §7.9)* Quieres garantizar que **todos** los commits de tu repo pasen por la skill `git-commit-es`. ¿Puede un hook *invocar* la skill directamente? Si no, ¿qué es exactamente lo que un hook `PreToolUse` sí puede hacer, y por qué "bloquear el `git commit` crudo" no es lo mismo que "garantizar que se use la skill"? Ordena de más duro a más blando los mecanismos que combinarías.
 
 > [!success]- Ver posibles respuestas (clic para expandir)
 > 1. Sin estándar, N modelos × M sistemas exigen N×M integraciones a medida; con MCP cada sistema publica un servidor una vez (N+M). Primitivas: tools (funciones que invoca el modelo), resources (datos de solo lectura que mencionas con `@`), prompts (plantillas que ejecutas como `/mcp__servidor__prompt`).
@@ -369,6 +411,7 @@ Piensa en un taller mecánico. Las herramientas nativas de Claude son las de **s
 > 9. Corre con `claude-sonnet-5` — el `model` del frontmatter es una asignación fija del agente, no algo que herede del orquestador (confirmado en el log: el orquestador cambió de modelo a mitad de sesión y el subagente no varió). Y no, no necesariamente incumplió: `readCount:0` solo prueba que no llamó a `Read` sobre ese archivo — si el resultado final respetó las reglas del proyecto es porque el **orquestador las pre-digirió dentro del `prompt`** que armó para invocarlo. La lección es justamente que "documentado" y "ejecutado" pueden diferir sin que el resultado sea incorrecto — pero quien orquesta no puede darlo por hecho sin mirar el log.
 > 10. **No**, no está en tu disco: las skills de cuenta viven en el **servidor de Anthropic** (se comprobó buscándola en `~/.claude` sin encontrarla, pese a ser invocable). El **app de escritorio (Cowork) y las sesiones en la nube** descargan las skills de tu cuenta; una **CLI pura** solo lee archivos locales (`~/.claude/skills/` y `.claude/skills/`), así que no la vería salvo que también existiera como archivo. *Descubrir* = tener su nombre + descripción en la lista (siempre, para decidir cuándo usarla); *cargar* = traer su contenido completo al contexto, y eso solo ocurre al invocarla (`Skill` o `/nombre`). Es *progressive disclosure*, igual que el tool search de MCP.
 > 11. (a) La del repo → editar su `SKILL.md` (se recoge en caliente) y **versionarla en Git**: actualizar es `git pull`. (b) La de marketplace → `/plugin marketplace update <nombre>` (o `/plugin update <plugin>`), que trae la última versión del repo del marketplace. (c) La de tu cuenta → **re-subirla** en la biblioteca web/app y abrir una **sesión nueva** para recogerla. La tercera es la del **mecanismo no documentado**: la doc oficial no especifica cómo ni cuándo se propaga la nueva versión a las sesiones (⚪), ni ofrece rollback documentado.
+> 12. **No**, un hook no puede invocar una skill (ni un subagente): la documentación es explícita en que los hooks se comunican solo por stdout/stderr y códigos de salida y no pueden disparar comandos `/` ni llamadas a herramientas. Un `PreToolUse` sí puede **bloquear** la acción (código de salida `2` o JSON con `permissionDecision: "deny"` + motivo) e **inyectar contexto** que el modelo lee. Por eso "bloquear el `git commit` crudo" ≠ "garantizar que se use la skill": el bloqueo es determinista, pero que el modelo *elija* la skill tras el bloqueo sigue siendo su juicio. De más duro a más blando: **hook** (bloquea el atajo) → **permisos** (cierran vías alternas) → **`CLAUDE.md`** (instruye) → **`description`** (dispara de forma natural). La garantía práctica surge de combinarlos, no de uno solo.
 
 ---
 [[Claude Code - Mapa de Contenidos|← Mapa de Contenidos]] · Siguiente → [[Claude Code Capitulo 08 - Comparativas]]
